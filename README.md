@@ -1,4 +1,4 @@
-# Lena Monitoring Dashboard
+# Mackenzie Monitoring Dashboard
 
 ## General Information
 
@@ -22,15 +22,13 @@ Dash provides a set of python packages that allow creating an interactive websit
 │   ├── style.css
 │   ├── favicon.ico
 │   ├── background1.png
-│   ├── Logos (Dashboard, AWI, OSL, IPGG, AARI, MPI)
+│   ├── Logos (Dashboard, AWI, ...)
 │   ├── Team photos
 │   └── ...
 ├── data
-│   ├── PublishedLenaMonitoringData.csv
-│   ├── DataForDashboard_FirstYear_20210701.csv
-│   ├── Lena_Kyusyur_1936_2020_corrected.csv
+│   ├── Duccem data
+│   ├── Mackenzie Arctic GRO discharge
 │   ├── Parameter_Info.csv
-│   ├── parameter_information.csv
 │   └── ...
 ├── multipage_app.py
 ├── index.py
@@ -55,12 +53,6 @@ The folder may currently contain additional files that are not used or deprecate
 * `requirements.txt` is a list of all python packages needed. Before working on the page locally, the command `pip install requirements.txt` can be executed to ensure, that the local environment holds all packages.
 * `runtime.txt` contains the python version that should be used (relevant for Heroku to be able to host the page correctly)
 * `Procfile` contains information on the server that should be used (relevant for Heroku)
-
-## Hosting
-
-The Dashboard is hosted via the Platform [Heroku](https://www.heroku.com/). In order to host the website, a free account has to be created. The account can then be connencted to the github repository in which all files are saved. Once connected, the dashboard can be deployed automatically and (if wanted) changes in the github files will update the Webpage immediatly. Detailed instructions can be found on the Heroku webpage.
-
-Note taht when using the free version of an Heroku account, the loading time takes long the first time the page is opened, the traffic is limited and the domain contains 'herokuapp.com'. 
 
 ## Useful Ressources
 
