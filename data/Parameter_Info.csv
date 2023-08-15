@@ -1,0 +1,84 @@
+Name,For Timeseries,For Scatter,Renamed (unit),Info
+ID,No,No,,
+Date,No,No,,
+Time,No,No,,
+DateTime,On x-axis by default,No,Datetime,
+Lat (DecDeg),No,No,,
+Lon (DecDeg),No,No,,
+Temperature (°C),Yes,Yes,Water temperature (°C),Measured in situ with a hand-held conductivity meter (WTW COND 340I)
+Conductivity in situ (µS/cm),No,No,,
+Conductivity lab (µS/cm),Yes,Yes,Electrical conductivity (µS/cm),Measured in lab on sample with a conductivity meter (WTW Multilab 540)
+d18O (o/oo) vs. SMOW,Yes,Yes,δ18O (‰ vs. SMOW),"Water samples for δ18O were collected untreated in 10 mL HDPE vials, sealed tightly, stored in the dark at 4°C. Measurements were conducted at the laboratory facility for stable isotopes at AWI Potsdam using a Finnigan MAT Delta-S mass spectrometer equipped with equilibration units for the online determination of hydrogen and oxygen isotopic composition."
+dD (o/oo) vs. SMOW,Yes,Yes,δD (‰ vs. SMOW),"Water samples for δD were collected untreated in 10 mL HDPE vials, sealed tightly, stored in the dark at 4°C. Measurements were conducted at the laboratory facility for stable isotopes at AWI Potsdam using a Finnigan MAT Delta-S mass spectrometer equipped with equilibration units for the online determination of hydrogen and oxygen isotopic composition."
+d-excess,Yes,Yes,d-excess (unitless),"Water samples for d-excess were collected untreated in 10 mL HDPE vials, sealed tightly, stored in the dark at 4°C. Measurements were conducted at the laboratory facility for stable isotopes at AWI Potsdam using a Finnigan MAT Delta-S mass spectrometer equipped with equilibration units for the online determination of hydrogen and oxygen isotopic composition."
+DOC (mg/L),Yes,Yes,Dissolved organic carbon (mg/L),"DOC samples were filled into a pre-rinsed 20 mL glass vial and acidified with 25 μL HCl Suprapur (10 M) and stored in the dark at 4°C. After transport, DOC samples were analyzed at the Alfred Wegener Institute Helmholtz Center for Polar and Marine Research (AWI), Potsdam, Germany. DOC concentrations were analyzed using high temperature catalytic oxidation (TOC-VCPH, Shimadzu)."
+d14C (Age),No,No,,
+Si uM/l (OSL),Yes,Yes,Silicate (µM/L),"Samples for Si were transported frozen (-24°C) from sampling site until analysis on automated continuous flow system (San+, SKALAR, Netherlands) with standard colorimetric techniques (Aminot et al. 2009)."
+QF_Si,No,No,,
+PO4 ug P/l (OSL),Yes,Yes,Phosphate (µg P/L),"Samples for PO4 were transported frozen (-24°C) from sampling site until analysis on automated continuous flow system (San+, SKALAR, Netherlands) with standard colorimetric techniques (Aminot et al. 2009)."
+PO4 µM/L (OSL),Yes,Yes,Phosphate (µmol P/L),"Samples for PO4 were transported frozen (-24°C) from sampling site until analysis on automated continuous flow system (San+, SKALAR, Netherlands) with standard colorimetric techniques (Aminot et al. 2009)."
+QF_PO4,No,No,,
+NO2+NO3 ug N/l (OSL),Yes,Yes,Nitrite and Nitrate (µg N/L),"Samples for NO2 and NO3 were transported frozen (-24°C) from sampling site until analysis on automated continuous flow system (San+, SKALAR, Netherlands) with standard colorimetric techniques (Aminot et al. 2009)."
+NO2+NO3 µM/L,Yes,Yes,,
+QF_NO2+NO3,No,No,,
+NH4 ug N/l (OSL),Yes,Yes,Ammonium (µg N/L),"Samples for NH4 were transported frozen (-24°C) from sampling site until analysis on automated continuous flow system (San+, SKALAR, Netherlands) with standard colorimetric techniques (Aminot et al. 2009)."
+NH4 µM/L,No,No,,
+QF_NH4,No,No,,
+NO2 µM N/l (OSL),Yes,Yes,Nitrite (µM N/L),"Samples for NO2 were transported frozen (-24°C) from sampling site until analysis on automated continuous flow system (San+, SKALAR, Netherlands) with standard colorimetric techniques (Aminot et al. 2009)."
+QF_NO2,No,No,,
+Total TP ug P/l,Yes,Yes,Total Phosphorus (µg P/L),Detailed information will follow.
+QF_TotalTP,No,No,,
+Dissolved TP ug P/l,Yes,Yes,Total Dissolved Phosphorus (µg P/L),"Samples for TDP were transported frozen (-24°C) from sampling site until analysis on automated continuous flow system (San+, SKALAR, Netherlands) with standard colorimetric techniques (Aminot et al. 2009). The technique of peroxide-based wet oxidation with microwave digestion replaced by autoclaving at 121°C was used. "
+QF_DissTP,No,No,,
+Total TN ug N/l,Yes,Yes,Total Nitrogen (µg N/L),Detailed information will follow.
+QF_TotalTN,No,No,,
+Dissolved TN ug N/l,Yes,Yes,Total Dissolved Nitrogen (µg N/L),"Samples for TDN were transported frozen (-24°C) from sampling site until analysis on automated continuous flow system (San+, SKALAR, Netherlands) with standard colorimetric techniques (Aminot et al. 2009). The technique of peroxide-based wet oxidation with microwave digestion replaced by autoclaving at 121°C was used. "
+QF_DissTN,No,No,,
+aCDOM254,Yes,Yes,Absorption of CDOM at 254nm (1/m),
+aCDOM350,Yes,Yes,Absorption of CDOM at 350nm (1/m),"aCDOM samples were collected in pre-rinsed 50 mL amber glass bottles that were stored in the dark at 4°C until analysis. aCDOM(350) was measured at the Otto Schmidt Laboratory for Polar and Marine Research (OSL), Saint Petersburg, Russia using a SPECORD 200 spectrophotometer (Analytik Jena) and at the German Research Center for Geosciences (GFZ), Potsdam, Germany using a LAMBDA 950 UV/Vis (PerkinElmer)."
+aCDOM443,Yes,Yes,Absorption of CDOM at 443nm (1/m),"aCDOM samples were collected in pre-rinsed 50 mL amber glass bottles that were stored in the dark at 4°C until analysis. aCDOM(443) was measured at the Otto Schmidt Laboratory for Polar and Marine Research (OSL), Saint Petersburg, Russia using a SPECORD 200 spectrophotometer (Analytik Jena) and at the German Research Center for Geosciences (GFZ), Potsdam, Germany using a LAMBDA 950 UV/Vis (PerkinElmer)."
+aCDOM690to700,No,No,,
+Cuvette length,No,No,,
+Instrument,No,No,,
+S275-295,Yes,Yes,Spectral slope S275-295 (1/nm),"The spectral slope of aCDOM(λ) between 275 and 295 nm (S275–295) was calculated by fitting a regression for the wavelength ranges 275–295 nm to an exponential function (see Helms et al., 2008)"
+SUVA,Yes,Yes,Specific ultraviolet absorption (m² g C-1),SUVA (m2 g C−1) was calculated by dividing the decadal absorption A/l (m−1) at 254 nm by DOC concentration (mg L−1).
+d14C sample,No,No,,
+cations and anions on sample,No,No,,
+Al µg/L (AWI),Yes,Yes,Aluminium (µg/L),"Water samples for Al were filtered using a syringe-mounted 0.45 μm CA filter and kept cool and dark until analysis acidified to pH below 2 with HNO3. Total dissolved elemental Al concentrations were measured with inductively coupled plasma optical emission spectroscopy (ICP-OES; Perkin Elmer Optima 8300DV; Boss and Fredeen, 1997)."
+QF_Al,No,No,,
+Ba µg/L (AWI),Yes,Yes,Barium (µg/L),"Water samples for Ba were filtered using a syringe-mounted 0.45 μm CA filter and kept cool and dark until analysis acidified to pH below 2 with HNO3. Total dissolved elemental Ba concentrations were measured with inductively coupled plasma optical emission spectroscopy (ICP-OES; Perkin Elmer Optima 8300DV; Boss and Fredeen, 1997)."
+QF_Ba,No,No,,
+Ca mg/L (AWI),Yes,Yes,Calcium (mg/L),"Water samples for Ca were filtered using a syringe-mounted 0.45 μm CA filter and kept cool and dark until analysis acidified to pH below 2 with HNO3. Total dissolved elemental Ca concentrations were measured with inductively coupled plasma optical emission spectroscopy (ICP-OES; Perkin Elmer Optima 8300DV; Boss and Fredeen, 1997)."
+QF_Ca,No,No,,
+Fe µg/L (AWI),Yes,Yes,Iron (µg/L),"Water samples for Fe were filtered using a syringe-mounted 0.45 μm CA filter and kept cool and dark until analysis acidified to pH below 2 with HNO3. Total dissolved elemental Fe concentrations were measured with inductively coupled plasma optical emission spectroscopy (ICP-OES; Perkin Elmer Optima 8300DV; Boss and Fredeen, 1997)."
+QF_Fe,No,No,,
+K mg/L (AWI),Yes,Yes,Potassium (mg/L),"Water samples for K were filtered using a syringe-mounted 0.45 μm CA filter and kept cool and dark until analysis acidified to pH below 2 with HNO3. Total dissolved elemental K concentrations were measured with inductively coupled plasma optical emission spectroscopy (ICP-OES; Perkin Elmer Optima 8300DV; Boss and Fredeen, 1997)."
+QF_K,No,No,,
+Mg mg/L (AWI),Yes,Yes,Magnesium (mg/L),"Water samples for Mg were filtered using a syringe-mounted 0.45 μm CA filter and kept cool and dark until analysis acidified to pH below 2 with HNO3. Total dissolved elemental Mg concentrations were measured with inductively coupled plasma optical emission spectroscopy (ICP-OES; Perkin Elmer Optima 8300DV; Boss and Fredeen, 1997)."
+QF_Mg,No,No,,
+Mn µg/L (AWI),Yes,Yes,Manganese (µg/L),"Water samples for Mn were filtered using a syringe-mounted 0.45 μm CA filter and kept cool and dark until analysis acidified to pH below 2 with HNO3. Total dissolved elemental Mn concentrations were measured with inductively coupled plasma optical emission spectroscopy (ICP-OES; Perkin Elmer Optima 8300DV; Boss and Fredeen, 1997)."
+QF_Mn,No,No,,
+Na mg/L (AWI),Yes,Yes,Sodium (mg/L),"Water samples for Na were filtered using a syringe-mounted 0.45 μm CA filter and kept cool and dark until analysis acidified to pH below 2 with HNO3. Total dissolved elemental Na concentrations were measured with inductively coupled plasma optical emission spectroscopy (ICP-OES; Perkin Elmer Optima 8300DV; Boss and Fredeen, 1997)."
+QF_Na,No,No,,
+P mg/L (AWI),Yes,Yes,Phosphite (mg/L),"Water samples for P were filtered using a syringe-mounted 0.45 μm CA filter and kept cool and dark until analysis acidified to pH below 2 with HNO3. Total dissolved elemental P concentrations were measured with inductively coupled plasma optical emission spectroscopy (ICP-OES; Perkin Elmer Optima 8300DV; Boss and Fredeen, 1997)."
+QF_P,No,No,,
+Si mg/L (AWI),Yes,Yes,Silica (mg/L),"Water samples for Si were filtered using a syringe-mounted 0.45 μm CA filter and kept cool and dark until analysis acidified to pH below 2 with HNO3. Total dissolved elemental Si concentrations were measured with inductively coupled plasma optical emission spectroscopy (ICP-OES; Perkin Elmer Optima 8300DV; Boss and Fredeen, 1997)."
+QF_Si.1,No,No,,
+Sr µg/L (AWI),Yes,Yes,Strontium (µg/L),"Water samples for Sr were filtered using a syringe-mounted 0.45 μm CA filter and kept cool and dark until analysis acidified to pH below 2 with HNO3. Total dissolved elemental Sr concentrations were measured with inductively coupled plasma optical emission spectroscopy (ICP-OES; Perkin Elmer Optima 8300DV; Boss and Fredeen, 1997)."
+QF_Sr,No,No,,
+F mg/L (AWI),Yes,Yes,Fluoride (mg/L),"Water samples for F were filtered using a syringe-mounted 0.45 μm CA filter and kept cool and dark until analysis. Concentrations were determined using ion chromatography (Thermo-Fischer ICS 2100; Weiss, 2001)."
+QF_F,No,No,,
+Cl mg/L (AWI),Yes,Yes,Chloride (mg/L),"Water samples for Cl were filtered using a syringe-mounted 0.45 μm CA filter and kept cool and dark until analysis. Concentrations were determined using ion chromatography (Thermo-Fischer ICS 2100; Weiss, 2001)."
+QF_Cl,No,No,,
+SO4 mg/L (AWI),Yes,Yes,Sulfate (mg/L),"Water samples for SO4 were filtered using a syringe-mounted 0.45 μm CA filter and kept cool and dark until analysis. Concentrations were determined using ion chromatography (Thermo-Fischer ICS 2100; Weiss, 2001)."
+QF_SO4,No,No,,
+Br mg/L (AWI),Yes,Yes,Bromide (mg/L),"Water samples for Br were filtered using a syringe-mounted 0.45 μm CA filter and kept cool and dark until analysis. Concentrations were determined using ion chromatography (Thermo-Fischer ICS 2100; Weiss, 2001)."
+QF_Br,No,No,,
+NO3 mg/L (AWI),Yes,Yes,Nitrate (mg/L),"Water samples for NO3 were filtered using a syringe-mounted 0.45 μm CA filter and kept cool and dark until analysis. Concentrations were determined using ion chromatography (Thermo-Fischer ICS 2100; Weiss, 2001)."
+QF_NO3_AWI,No,No,,
+PO4 mg/L (AWI),Yes,Yes,Phosphate (mg/L),"Water samples for PO4 were filtered using a syringe-mounted 0.45 μm CA filter and kept cool and dark until analysis. Concentrations were determined using ion chromatography (Thermo-Fischer ICS 2100; Weiss, 2001)."
+QF_PO4_AWI,No,No,,
+Day of Year,No,Yes,Day of year (JJJ),Day of year
+Year,No,Yes,Year (YYY),Year
+Month,No,Yes,Month (MM),Month
+Discharge,Yes,Yes,Discharge (m³/s),"Discharge data is taken from ArcticGRO (Shicklomanov et al., 2021) and is corrected for the distance difference between the gauge station at Kyusyur and water sampling station at Samoylov Island (~220 km) using a Lena River propagation speed estimate (88 km/d) from Smith and Pavelsky (2008)."

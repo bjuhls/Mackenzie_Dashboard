@@ -1,0 +1,84 @@
+Name,comment
+ID,Detailed information will follow.
+Date,Detailed information will follow.
+Time,Detailed information will follow.
+DateTime,Detailed information will follow.
+Lat (DecDeg),Detailed information will follow.
+Lon (DecDeg),Detailed information will follow.
+Temperature (°C),Detailed information will follow.
+Conductivity in situ (µS/cm),Detailed information will follow.
+Conductivity lab (µS/cm),Detailed information will follow.
+d18O (o/oo) vs. SMOW,Detailed information will follow.
+dD (o/oo) vs. SMOW,Detailed information will follow.
+d-excess,Detailed information will follow.
+DOC (mg/L),Detailed information will follow.
+d14C (Age),Detailed information will follow.
+Si uM/l (OSL),Detailed information will follow.
+QF_Si,Detailed information will follow.
+PO4 ug P/l (OSL),Detailed information will follow.
+PO4 µM/L (OSL),Detailed information will follow.
+QF_PO4,Detailed information will follow.
+NO2+NO3 ug N/l (OSL),Detailed information will follow.
+NO2+NO3 µM/L,Detailed information will follow.
+QF_NO2+NO3,Detailed information will follow.
+NH4 ug N/l (OSL),Detailed information will follow.
+NH4 µM/L,Detailed information will follow.
+QF_NH4,Detailed information will follow.
+NO2 ug N/l (OSL),Detailed information will follow.
+QF_NO2,Detailed information will follow.
+Total TP ug P/l,Detailed information will follow.
+QF_TotalTP,Detailed information will follow.
+Dissolved TP ug P/l,Detailed information will follow.
+QF_DissTP,Detailed information will follow.
+Total TN ug N/l,Detailed information will follow.
+QF_TotalTN,Detailed information will follow.
+Dissolved TN ug N/l,Detailed information will follow.
+QF_DissTN,Detailed information will follow.
+aCDOM254,Detailed information will follow.
+aCDOM350,Detailed information will follow.
+aCDOM443,Detailed information will follow.
+aCDOM690to700,Detailed information will follow.
+Cuvette length,Detailed information will follow.
+Instrument,Detailed information will follow.
+S275-295,Detailed information will follow.
+SUVA,Detailed information will follow.
+d14C sample,Detailed information will follow.
+cations and anions on sample,Detailed information will follow.
+Al µg/L (AWI),Detailed information will follow.
+QF_Al,Detailed information will follow.
+Ba µg/L (AWI),Detailed information will follow.
+QF_Ba,Detailed information will follow.
+Ca mg/L (AWI),Detailed information will follow.
+QF_Ca,Detailed information will follow.
+Fe µg/L (AWI),Detailed information will follow.
+QF_Fe,Detailed information will follow.
+K mg/L (AWI),Detailed information will follow.
+QF_K,Detailed information will follow.
+Mg mg/L (AWI),Detailed information will follow.
+QF_Mg,Detailed information will follow.
+Mn µg/L (AWI),Detailed information will follow.
+QF_Mn,Detailed information will follow.
+Na mg/L (AWI),Detailed information will follow.
+QF_Na,Detailed information will follow.
+P mg/L (AWI),Detailed information will follow.
+QF_P,Detailed information will follow.
+Si mg/L (AWI),Detailed information will follow.
+QF_Si.1,Detailed information will follow.
+Sr µg/L (AWI),Detailed information will follow.
+QF_Sr,Detailed information will follow.
+F mg/L (AWI),Detailed information will follow.
+QF_F,Detailed information will follow.
+Cl mg/L (AWI),Detailed information will follow.
+QF_Cl,Detailed information will follow.
+SO4 mg/L (AWI),Detailed information will follow.
+QF_SO4,Detailed information will follow.
+Br mg/L (AWI),Detailed information will follow.
+QF_Br,Detailed information will follow.
+NO3 mg/L (AWI),Detailed information will follow.
+QF_NO3_AWI,Detailed information will follow.
+PO4 mg/L (AWI),Detailed information will follow.
+QF_PO4_AWI,Detailed information will follow.
+Day of Year,Detailed information will follow.
+Year,Detailed information will follow.
+Month,Detailed information will follow.
+Discharge,All discharge data shown in this study were corrected for the distance difference between the gauge station at Kyusyur and water sampling station at Samoylov Island (~220 km) using a Lena River propagation speed estimate (88 km/d) from Smith and Pavelsky (2008).

@@ -1,0 +1,33 @@
+ID;Date;Time (local);Lat (DecDeg);Lon (DecDeg);Temp_degC (°C);Cond_µScm (µS/cm);comments on sampling location;comments on sampling situation;sampled by;GF-F_FilterID;initialFilter-weight_g;FilteredVolume_ml;comment on filtering process
+TSI;2023-05-05;12:00;67.4543;-133.7178;0.1;358;from ice, middle of Mackenzie River at Arctic Red River = location of ArcticGRO sampling;frozen river, clear colourless H2O;Anne Morgenstern, Felica Gehde;2;0.1293;1000;before filtering Nalgene filter set rinsed with Milli-Q water of unclear quality
+blank 1;2023-05-05;;;;;;;;Felica Gehde;3;0.1273;1000;Milli-Q water of unclear quality
+2;2023-05-05;15:30;68.338;-133.7063;0.13;371;from ice, 20 m from land, 108 cm thick ice;frozen river;;;;;
+3;2023-05-08;11:00;68.338;-133.7063;0.11;371;from ice, same hole as for sample number 002;frozen river;;;;;
+4;2023-05-09;10:00;68.338;-133.7063;0.13;371;on ice, 13 cm of meltwater on ice, ice thickness 96.5 cm;spring melt on ice, cloudy, little wind, little colour to water, 2 CTD casts - use 2nd one;Lance Gray;6;0.1293;1000;before filtering Nalgene filter set rinsed with Milli-Q water of unclear quality
+5;2023-05-10;10:00;68.338;-133.7063;0.16;367;from ice, same hole as last days;standing meltwater puddle from shore reaches to ice hole;Anne Morgenstern, Felica Gehde;7;0.1292;800;before filtering Nalgene filter set rinsed with Milli-Q water of unclear quality
+6;2023-05-16;09:20;;;0.11;311;sampling from shore;;;;;;
+7;2023-05-23;10:00;68.3383;-133.705;0.75;229;hand taken with bottle, sample taken upriver of myself ~15 m into water, stood still for ~1 min to let water settle;spring breakup of ice one day prior, beavers swimming by slopping water, lots of sediment, still ice chunks and floating logs, could not reach point of previous sample;Lance Gray;9;0.129;200;Milli Q water used to rinse upper chamber of sediment
+blank 2;2023-05-23;;;;;;;;Lance Gray;10;0.1282;1000;blank filter with Milli Q water, Nalgene cleaned after POC sample taken, rinsed with Milli Q water of unclear quality
+8;2023-05-26;10:50;;;2.71;211;waded into water ~15 m for sample by hand;;;;;;
+9;2023-05-30;11:10;;;5.76;226;sample taken from shoreline, very deep mud left to settle before taking sample;spring flood levels settling, little wind, lots of sediment, floating debris;Lance Gray;12;0.1288;200;floating debris on water at sampling
+10;2023-06-06;13:35;;;10.33;232;from shoreline, by hand, standing on river edge letting sediment settle before sample;lowering water level, up river wind - light, lots of sediment visible, difficult to have zero disturbance in sediment but best efforts made to gather 'clean' sample;Lance Gray;13;0.1301;200;potentially disturbed sediment during sampling, Milli Q rinse of unclear quality
+Transect bottle #1;2023-06-09;;;;;;transect taken across width of river at same point of other samples;;;;;;
+Transect bottle #2;2023-06-09;;;;;;transect taken across width of river at same point of other samples;;;;;;
+Transect bottle #3;2023-06-09;;;;;;transect taken across width of river at same point of other samples;;;;;;
+11;2023-06-13;13:30;;;13.62;243;from shoreline, by hand;up river wind, waves moving up river, sediment being moved by waves;;;;;
+12;2023-06-20;09:35;;;14.95;258;from shoreline;murky water;;;;;
+13;2023-06-27;09:50;68.3381;-133.7058;16.78;263;from dock ~10 m from shore;murky water, breeze from downriver, small waves up river;Lance Gray;;;;
+Transect bottle #1;2023-06-27;;;;;;by hand from boat;;;;;;
+Transect bottle #2;2023-06-27;;;;;;by hand from boat;;;;;;
+Transect bottle #3;2023-06-27;;;;;;by hand from boat;;;;;;
+blank 3;2023-06-29;;;;;;;;Lance Gray;22;0.1277;1000;Milli-Q system change, control taken
+14;2023-07-04;10:09;68.3381;-133.7058;20.09;287;from dock off of upriver side;no wind, steady flowing river, murky, a few minnows near dock;Lance Gray;23;1,289;200;
+15;2023-07-11;13:35;68.3381;-133.7058;21.87;305;from dock, up river side;slight up river breeze;;;;;
+16;2023-07-18;10:55;68.3381;-133.7058;20.95;279;from dock;light breeze blowing up river;;;;;
+17;2023-07-25;09:50;68.3381;-133.7058;21.76;283;from dock;very light down river breeze (wind from up river to down river);;;;;
+Transect bottle #1;2023-07-25;;;;;;by hand from boat;;;;;;
+Transect bottle #2;2023-07-25;;;;;;by hand from boat;;;;;;
+Transect bottle #3;2023-07-25;;;;;;by hand from boat;;;;;;
+blank 4;2023-07-25;;;;;;;;;29;0.1282;1000;rinses between samples not allowed to dry, though left to drain sufficiently
+18;2023-08-01;09:50;68.3381;-133.7058;22.25;305;from dock;calm, fog/smoke, light sheen on water, low water;Lance Gray, Paul Overduin;30;0.1283;200;
+19;2023-08-08;10:30;68.3381;-133.7058;19.97;319;from dock;no wind, very smokey, thin sediment layer on water (ash?), low water;Lance Gray ;31;0.1288;200;

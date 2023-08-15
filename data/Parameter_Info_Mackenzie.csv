@@ -1,0 +1,19 @@
+Name,For Timeseries,For Scatter,Renamed (unit),Info
+ID,No,No,,
+Date,On x-axis by default,No,Datetime,
+Time (local),No,No,,
+Lat (DecDeg),No,No,,
+Lon (DecDeg),No,No,,
+Temp_degC (°C),Yes,Yes,Water temperature (°C),"Measured in situ with a CastAway CTD"
+Cond_µScm (µS/cm),Yes,Yes,Conductivity (µS/cm),"Measured in situ with a CastAway CTD"
+comments on sampling location,No,No,,
+comments on sampling situation,No,No,,
+sampled by,No,No,,
+GF-F_FilterID,No,No,,
+initialFilter-weight_g,No,No,,
+FilteredVolume_ml,No,No,,
+comment on filtering process,No,No,,
+Day of Year,No,Yes,Day of year (JJJ),Day of year
+Year,No,Yes,Year (YYY),Year
+Month,No,Yes,Month (MM),Month
+Discharge,Yes,Yes,Discharge (m³/s),"Discharge data is taken from ArcticGRO (Shicklomanov et al., 2021)."
