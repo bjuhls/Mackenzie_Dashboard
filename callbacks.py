@@ -21,54 +21,20 @@ from multipage_app import app
 
 import os
 
-from login_information import password as pw
-# import flask
-# from users import users_info
-# user_pwd, user_names = users_info()
-# _app_route = '/'
-#
-# @app.server.route('/login', methods=['POST'])
-# def route_login():
-#     data = flask.request.form
-#     username = data.get('username')
-#     password = data.get('password')
-#
-#     if username not in user_pwd.keys() or  user_pwd[username] != password:
-#         return flask.redirect('/login')
-#     else:
-#
-#         # Return a redirect with
-#         rep = flask.redirect(_app_route)
-#
-#         # Here we just store the given username in a cookie.
-#         # Actual session cookies should be signed or use a JWT token.
-#         rep.set_cookie('custom-auth-session', username)
-#         return rep
+#from login_information import password as pw
 
-# # create a logout route
-# @app.server.route('/logout', methods=['POST'])
-# def route_logout():
-#     # Redirect back to the index and remove the session cookie.
-#     rep = flask.redirect('/login')
-#     rep.set_cookie('custom-auth-session', '', expires=0)
-#     return rep
 
 # import data
 df = pd.read_csv('data/DUCCEM_sampling_list.csv', parse_dates=['Date'], na_values='n.a.', sep=";")
 df['Day of Year'] = df.Date.dt.dayofyear
 df['Year'] = df.Date.dt.year
 df['Month'] = df.Date.dt.month
-# df['x_artificial'] = np.linspace(1, 10, df.shape[0])
-# df['logy_artificial'] = 4 * np.log(df.x_artificial) - 2 + np.random.normal(size=df.shape[0])
-# df['powy_artificial'] = 2 * np.power(df.x_artificial, 2.5) + 4 + np.random.normal(size=df.shape[0])*50
 
 dis = pd.read_csv('data/Mackenzie_ArcticRedRiver_Version_20230809.csv',
     parse_dates=['date'], index_col='date', sep=";"
 )
 df['Discharge'] = dis.loc[list(df.Date)].discharge.values
 param_info = pd.read_csv('data/Parameter_Info_Mackenzie.csv', index_col='Name')
-
-# df.iloc[0, :].to_csv('parameter_information_empty.csv')
 
 # define columns to use
 not_used = set()
@@ -92,7 +58,6 @@ dis = pd.read_csv('data/Mackenzie_ArcticRedRiver_Version_20230809.csv',
     parse_dates=['date'], index_col='date', sep=";"
 )
 df['Discharge'] = dis.loc[list(df.Date)].discharge.values
-
 
 # import parameter information
 info = pd.read_csv('data/Parameter_Info_Mackenzie.csv')
@@ -118,8 +83,6 @@ if sum(df.columns.values != info.Name.values) > 0:
 # login status
 login = False
 
-# import unpublished data
-df_u = pd.read_csv('data/unpublished.csv')
 
 
 # define colors
@@ -601,164 +564,6 @@ def slide(prev_clicks, next_clicks):
         n = -prev_clicks
 
     return image_descriptions[n], f'assets/Pictures/compressed/{image_list[n]}', rights[n] #, f'{n}/{len(image_list)}'
-# Download data
-# filtered csv
-@app.callback(
-    Output("download-dataframe-csv", "data"),
-    [
-        Input("btn_csv", "n_clicks"),
-        Input('download-parameter', 'value'),
-        Input('download-date-range', 'start_date'),
-        Input('download-date-range', 'end_date'),
-        # Input('password-collapse', 'is_open'),
-    ],
-    prevent_initial_call=True,
-)
-def func(n_clicks, columns, start, end):
-    data = df.copy()
-    time_mask = (data.Date.dt.date >= pd.to_datetime(start)) & (data.Date.dt.date <= pd.to_datetime(end))
-    selected_data = data[time_mask][columns]
-    changed_id = [p['prop_id'] for p in callback_context.triggered][0]
-    global login
-    # print(unpub_checked)
-    if 'btn_csv.n_clicks' in changed_id:
-        # if unpub_checked and login:
-        #     return dcc.send_data_frame(df_u.to_csv, "LenaMonitoringData_filtered_unpublished.csv")
-        # else:
-        return dcc.send_data_frame(df_u.to_csv, "LenaMonitoringData_filtered.csv")
-
-# full csv
-@app.callback(
-    Output("download-dataframe-csv_full", "data"),
-    [
-        Input("btn_csv_full", "n_clicks"),
-        Input('password-collapse', 'is_open'),
-        Input('unpublished-password', 'value')
-    ],
-    prevent_initial_call=True,
-)
-def func(n_clicks, unpub_checked, password):
-    changed_id = [p['prop_id'] for p in callback_context.triggered][0]
-    global login
-    if password == pw:# and 'btn_unpub_full.n_clicks' in changed_id:
-        login = True
-    if 'btn_csv_full' in changed_id:
-        if login and unpub_checked:
-            return dcc.send_data_frame(df_u.to_csv, "LenaMonitoringData_full_unpublished.csv")
-        else:
-            return dcc.send_data_frame(df.to_csv, "LenaMonitoringData_full.csv")
-    login=False
-# filtered excel
-@app.callback(
-    Output("download-dataframe-xlsx", "data"),
-    [
-        Input("btn_xlsx", "n_clicks"),
-        Input('download-parameter', 'value'),
-        Input('download-date-range', 'start_date'),
-        Input('download-date-range', 'end_date'),
-        # Input('password-collapse', 'is_open')
-    ],
-    prevent_initial_call=True,
-)
-def func(n_clicks,columns, start, end):#, unpub_checked):
-    data = df.copy()
-    time_mask = (data.Date.dt.date >= pd.to_datetime(start)) & (data.Date.dt.date <= pd.to_datetime(end))
-    selected_data = data[time_mask][columns]
-    changed_id = [p['prop_id'] for p in callback_context.triggered][0]
-    if 'btn_xlsx.n_clicks' in changed_id:
-        # if login and unpub_checked:
-        #   return dcc.send_data_frame(df_u.to_excel, "LenaMonitoringData_filtered_unpublished.xlsx", sheet_name="Sheet_1")
-        # else:
-        return dcc.send_data_frame(selected_data.to_excel, "LenaMonitoringData_filtered.xlsx", sheet_name="Sheet_1")
-
-# full excel
-@app.callback(
-    Output("download-dataframe-xlsx_full", "data"),
-    [
-        Input("btn_xlsx_full", "n_clicks"),
-        Input('password-collapse', 'is_open'),
-        Input('unpublished-password', 'value')
-    ],
-    prevent_initial_call=True,
-)
-def func(n_clicks, unpub_checked, password):
-    changed_id = [p['prop_id'] for p in callback_context.triggered][0]
-    global login
-    # print(password)
-    if password == pw:
-        login=True
-    if 'btn_xlsx_full' in changed_id:
-        # print(login)
-        if login and unpub_checked:
-            return dcc.send_data_frame(df_u.to_excel, "LenaMonitoringData_full_unpublished.xlsx", sheet_name="Sheet_1")
-        else:
-            return dcc.send_data_frame(df.to_excel, "LenaMonitoringData_full.xlsx", sheet_name="Sheet_1")
-    login=False
-# toggle password area
-@app.callback(
-    [
-        Output('password-collapse', 'is_open'),
-        # Output('success', 'children'),
-        # Output('unpublished-password', 'disabled')
-    ],
-    [
-        Input('unpublished-data', 'value')
-    ],
-    # [
-    #     State('password-collapse', 'is_open')
-    # ]
-)
-def show_password_field(value):
-    if value == ['on']:
-        show = True
-    else:
-        show = False
-    return [show]
-
-# download unpublished data
-@app.callback(
-    [
-        # Output("download-unpublished", "data"),
-        Output('success', 'children'),
-        Output('unpublished-password', 'disabled')
-    ],
-    [
-        Input("btn_unpub_full", "n_clicks"),
-        Input('unpublished-password', 'value'),
-        # Input('unpublished-data', 'value'),
-    ],
-    prevent_initial_call=True,
-)
-def func(n_clicks, password):
-    success = f'You are now logged in and have access to the unpublished data.'
-    changed_id = [p['prop_id'] for p in dash.callback_context.triggered][0]
-    global login
-
-    if password == pw and 'btn_unpub_full.n_clicks' in changed_id:
-        login = True
-        return [success], True
-
-    elif password != pw and 'btn_unpub_full.n_clicks' in changed_id:
-        login = False
-        return ['Wrong password.'], False
-
-    else:
-        if login:
-            return [success], True
-        else:
-            return [None], False
-
-    # if 'unpublished-data.value' in changed_id:
-    #     login = False
-# Disclaimer
-@app.callback(
-    [
-        Output("disclaimer-collapse", "is_open"),
-        # Output('disclaimer-button', 'style')
-    ],
-    [Input("disclaimer-button", "n_clicks")],
-    [State("disclaimer-collapse", "is_open")],
-)
 def toggle_collapse(n, is_open):
     if n:
         return not is_open,# {
