@@ -23,12 +23,14 @@ df['Month'] = df.Date.dt.month
 dis = pd.read_csv('data/Mackenzie_ArcticRedRiver_Version_20230809.csv',
     parse_dates=['date'], index_col='date', sep=";"
 )
+print(list(df.Date))
 df['Discharge'] = dis.loc[list(df.Date)].discharge.values
 
 
 # import parameter information
-info = pd.read_csv('data/Parameter_Info_Mackenzie.csv')
-
+info = pd.read_csv('data/Parameter_Info_Mackenzie.csv', sep=",")
+print(df.columns.values)
+print(info.Name.values)
 
 ts_mask = info['For Timeseries']=='Yes'
 sc_mask = info['For Scatter']=='Yes'

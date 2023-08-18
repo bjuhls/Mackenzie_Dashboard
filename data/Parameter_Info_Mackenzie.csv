@@ -4,8 +4,9 @@ Date,On x-axis by default,No,Datetime,
 Time (local),No,No,,
 Lat (DecDeg),No,No,,
 Lon (DecDeg),No,No,,
-Temp_degC (°C),Yes,Yes,Water temperature (°C),"Measured in situ with a CastAway CTD"
-Cond_µScm (µS/cm),Yes,Yes,Conductivity (µS/cm),"Measured in situ with a CastAway CTD"
+Temp_degC (°C),Yes,Yes,Water temperature (°C),Measured in situ with a CastAway CTD
+Cond_µScm (µS/cm),Yes,Yes,Conductivity (µS/cm),Measured in situ with a CastAway CTD
+Discharge (m³/s),Yes,Yes,Discharge at East Channel (m³/s),Measured with the SonTek RiverSurveyor
 comments on sampling location,No,No,,
 comments on sampling situation,No,No,,
 sampled by,No,No,,
@@ -16,4 +17,4 @@ comment on filtering process,No,No,,
 Day of Year,No,Yes,Day of year (JJJ),Day of year
 Year,No,Yes,Year (YYY),Year
 Month,No,Yes,Month (MM),Month
-Discharge,Yes,Yes,Discharge (m³/s),"Discharge data is taken from ArcticGRO (Shicklomanov et al., 2021)."
+Discharge,Yes,Yes,Discharge (m³/s),Discharge data is taken from ArcticGRO (Shicklomanov et al. 2021).
