@@ -23,14 +23,14 @@ df['Month'] = df.Date.dt.month
 dis = pd.read_csv('data/Mackenzie_ArcticRedRiver_Version_20230809.csv',
     parse_dates=['date'], index_col='date', sep=";"
 )
-print(list(df.Date))
+#print(list(df.Date))
 df['Discharge'] = dis.loc[list(df.Date)].discharge.values
 
 
 # import parameter information
 info = pd.read_csv('data/Parameter_Info_Mackenzie.csv', sep=",")
-print(df.columns.values)
-print(info.Name.values)
+#print(df.columns.values)
+#print(info.Name.values)
 
 ts_mask = info['For Timeseries']=='Yes'
 sc_mask = info['For Scatter']=='Yes'
@@ -87,7 +87,7 @@ navbar = dbc.NavbarSimple(
     children=[
         dbc.NavItem(dbc.NavLink("Time Series", href="/#time-series", external_link=True)),
         dbc.NavItem(dbc.NavLink("Correlations", href="/#correlations", external_link=True)),
-        dbc.NavItem(dbc.NavLink("Gallery", href="/#gallery", external_link=True)),
+        dbc.NavItem(dbc.NavLink("Impressions", href="/#impressions", external_link=True)),
         #dbc.NavItem(dbc.NavLink("Download", href="/#download", external_link=True)),
         #dbc.NavItem(dbc.NavLink("The Station", href="/#the-station", external_link=True)),
         dbc.NavItem(dbc.NavLink("Related Info", href="/#related-info", external_link=True)),
@@ -121,26 +121,33 @@ header = dbc.Container([
                 href='/',
                 className='header-image'
             ),
-            width=3,
+            width=5,
             xl=3, lg=3, md=3, sm=2, xs=2
         ),
         dbc.Col(
             [
                 html.H1(
                     [
-                        "Mackenzie River (East Channel, Invuik) Biogeochemistry",
+                        "Explore the biogeochemistry of the Mackenzie River (East Channel, Inuvik)",
                         html.Br(),
                     ],
                      className='header-title',
-                     style={'font-size': '32px'}
+                     style={'font-size': '18px'}
                 ),
                 html.P(
-                    children=[
-                        
-                        ' This interactive dashboard gives you the opportunity'
-                        ' to explore data that has been collected so far',
-                        
+                    #children=[
+                    ['The research leading to these results has received funding from the European ',
+                      'Union’s Horizon 2020 project Interact under grant agreement No 730938, click for more info about ', 
+                      html.A( ' INTERACT', href='https://eu-interact.org/',
+                      style={"color": "black"}
+                      )
                     ],
+                        
+                        #' The research leading to these results has received funding from the European',
+                        #' Union’s Horizon 2020 project Interact under grant agreement No 730938.',
+                        #href='https://www.awi.de/en/about-us/organisation/staff/sofia-antonova.html'
+                        
+                    #],
                     className='header-description',
                 ),
 
@@ -152,6 +159,7 @@ header = dbc.Container([
     ],
     justify='center'
     ),
+
     ],
     className='header',
 ),
@@ -545,9 +553,9 @@ main_page = dbc.Container([
     ]),
 
     # Slideshow
-    dbc.Card(id='gallery',
+    dbc.Card(id='impressions',
         children=[
-            dbc.CardHeader(html.H4('Photo album')),
+            dbc.CardHeader(html.H4('Impressions')),
             # dbc.CardImg(id='img-slide', src="assets/slideshow1.png", top=True, className='center-block, slideshow-image'),
             dbc.CardBody([
                 dbc.Row(
@@ -695,12 +703,12 @@ team_page = dbc.Container([
                     ),
                     dbc.Col(
                         dbc.Card([
-                            dbc.CardImg(src='assets/Overduin_sweden.jpg'),
+                            dbc.CardImg(src='assets/Erika.png'),
                             dbc.CardBody([
-                                html.H5('Paul Overduin'), # pay attention to name legth
-                                html.H6('Senior scientist'),
-                                html.P('Alfred Wegener Institute, Helmholtz Centre for Polar and Marine Research (AWI)'),
-                                html.A('Personal institute page', href='https://www.awi.de/en/about-us/organisation/staff/paul-overduin.html', target='_blank')
+                                 html.H5('Erika Hille'), # pay attention to name legth
+                                 html.H6('Special Projects Coordinator/Librarian'),
+                                 html.P('Western Arctic Research Centre (WARC), Aurora Research Institute (ARI)'),
+                                 html.A('Personal institute page', href='https://nwtresearch.com/about-us/people/erika-hille', target='_blank')
                             ],
                             className='team-card'
                             )
@@ -723,25 +731,40 @@ team_page = dbc.Container([
                         ]),
                         xl=3, lg=3, md=4, sm=6, xs=12
                     ),
+                    dbc.Col(
+                        dbc.Card([
+                            dbc.CardImg(src='assets/Overduin_sweden.jpg'),
+                            dbc.CardBody([
+                                html.H5('Paul Overduin'), # pay attention to name legth
+                                html.H6('Senior scientist'),
+                                html.P('Alfred Wegener Institute, Helmholtz Centre for Polar and Marine Research (AWI)'),
+                                html.A('Personal institute page', href='https://www.awi.de/en/about-us/organisation/staff/paul-overduin.html', target='_blank')
+                            ],
+                            className='team-card'
+                            )
+
+                        ]),
+                        xl=3, lg=3, md=4, sm=6, xs=12
+                    ),
                     ],
                     justify='center',
                 ),
                 dbc.Row([
-                    # dbc.Col(
-                        # dbc.Card([
-                            # dbc.CardImg(src='assets/Chetverova.PNG'),
-                            # dbc.CardBody([
-                                # html.H5('Antonina Chetverova'), # pay attention to name legth
-                                # html.H6('Senior lecturer\U000000B9, scientist\U000000B2'),
-                                # html.P('\U000000B9St. Petersburg University (SPBU), \U000000B2Arctic and Antarctic Research Institute (AARI)'),
-                                # html.A('Personal institute page', href='http://earth.spbu.ru/en/structure/staff/staff-A-Z_1079.html', target='_blank')
-                            # ],
-                            # className='team-card'
-                            # )
+                     dbc.Col(
+                         dbc.Card([
+                             dbc.CardImg(src='assets/Lance_clip.png'),
+                             dbc.CardBody([
+                                 html.H5('Lance Gray'), # pay attention to name legth
+                                 html.H6('Research & Outreach Assistant'),
+                                 html.P('Western Arctic Research Centre (WARC), Aurora Research Institute (ARI)'),
+                                 html.A('Personal institute page', href='https://www.auroracollege.nt.ca/staff-directory/lance-gray/', target='_blank')
+                             ],
+                             className='team-card'
+                             )
 
-                        # ]),
-                        # xl=3, lg=3, md=4, sm=6, xs=12
-                    # ),
+                         ]),
+                         xl=3, lg=3, md=4, sm=6, xs=12
+                     ),
                     dbc.Col(
                         dbc.Card([
                             dbc.CardImg(src='assets/eulenbur_square.jpg'),
@@ -757,36 +780,36 @@ team_page = dbc.Container([
                         ]),
                         xl=3, lg=3, md=4, sm=6, xs=12
                     ),
-                    # dbc.Col(
-                        # dbc.Card([
-                            # dbc.CardImg(src='assets/antonova_square.jpg'),
-                            # dbc.CardBody([
-                                # html.H5('Sofia Antonova'), # pay attention to name legth
-                                # html.H6('Logistics'),
-                                # html.P('Alfred Wegener Institute, Helmholtz Centre for Polar and Marine Research (AWI)'),
-                                # html.A('Personal institute page', href='https://www.awi.de/en/about-us/organisation/staff/sofia-antonova.html', target='_blank')
-                            # ],
-                            # className='team-card'
-                            # )
+                     dbc.Col(
+                         dbc.Card([
+                             dbc.CardImg(src='assets/Felica_clip.png'),
+                             dbc.CardBody([
+                                 html.H5('Felica Gehde'), # pay attention to name legth
+                                 html.H6('Student assistant'),
+                                 html.P('Alfred Wegener Institute, Helmholtz Centre for Polar and Marine Research (AWI)'),
+                                 #html.A('Personal institute page', href='https://www.awi.de/en/about-us/organisation/staff/sofia-antonova.html', target='_blank')
+                             ],
+                             className='team-card'
+                             )
 
-                        # ]),
-                        # xl=3, lg=3, md=4, sm=6, xs=12
-                    # ),
-                    # dbc.Col(
-                        # dbc.Card([
-                            # dbc.CardImg(src='assets/FotoKatya.jpg'),
-                            # dbc.CardBody([
-                                # html.H5('Ekaterina Abramova'), # pay attention to name legth
-                                # html.H6('Senior scientist'),
-                                # html.P('Lena Delta Nature Reserve'),
-                                html.A('Personal institute page', href='https://www.awi.de/en/about-us/organisation/staff/sofia-antonova.html', target='_blank')
-                            # ],
-                            # className='team-card'
-                            # )
+                         ]),
+                         xl=3, lg=3, md=4, sm=6, xs=12
+                     ),
+                     dbc.Col(
+                         dbc.Card([
+                             dbc.CardImg(src='assets/Lisa.png'),
+                             dbc.CardBody([
+                                 html.H5('Lisa Broeder'), # pay attention to name legth
+                                 html.H6('Postdoctoral Researcher'),
+                                 html.P('ETH Zürich'),
+                                html.A('Personal institute page', href='https://erdw.ethz.ch/personen/profil.MjQ0Nzg2.TGlzdC83NzMsOTI0MjA1OTI2.html', target='_blank')
+                             ],
+                             className='team-card'
+                             )
 
-                        # ]),
-                        # xl=3, lg=3, md=4, sm=6, xs=12
-                    # ),
+                         ]),
+                         xl=3, lg=3, md=4, sm=6, xs=12
+                     ),
                 ],
                 justify='center')
             ])

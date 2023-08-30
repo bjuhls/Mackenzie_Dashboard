@@ -113,6 +113,7 @@ def update_time_series_plot(first_y, second_y, start, end, y1log, y2log):
     y2_name = info[info.Name==second_y]['Renamed (unit)'].values[0]
     y1_unit = y1_name.split(' (')[1][:-1]
     y2_unit = y2_name.split(' (')[1][:-1]
+    #print(y1_info)
 
     if y1_unit in ['unitless']:
         y1_unit=''
@@ -125,30 +126,75 @@ def update_time_series_plot(first_y, second_y, start, end, y1log, y2log):
     #ts = pd.Timestamp(data.Datetime)
     time_mask = (pd.to_datetime(data.Date.dt.date) >= datetime.datetime.strptime(start, '%Y-%m-%d')) & (pd.to_datetime(data.Date.dt.date) <= datetime.datetime.strptime(end, '%Y-%m-%d'))
     data = data[time_mask]
+    time_mask2 = (pd.to_datetime(dis.index) >= datetime.datetime.strptime(start, '%Y-%m-%d')) & (pd.to_datetime(dis.index) <= datetime.datetime.strptime(end, '%Y-%m-%d'))
+    
+    dis_1 = dis[time_mask2]
+    print(dis_1)
+    
+    x=data.Date
+    y=data[first_y]
+    nan_mask = ~np.isnan(x) & ~np.isnan(y)
+    x1 = x[nan_mask]
+    y1 = y[nan_mask]
+    #print("original y")
+    #print(data[second_y])
+    #print("x")
+    #print(x1)
+    #print("y1")
+    #print(y1)
+    #print("data first y")
+    #print(data[first_y][nan_mask])
+    
+    #print(dis["date"])
+    
     # Create figure with secondary y-axis
+    
+ 
     fig = make_subplots(specs=[[{"secondary_y": True}]])
     fig.add_trace(
-        go.Scatter(x=data.Date, y=data[first_y],
+        go.Scatter(x=data.Date[nan_mask], y=data[first_y][nan_mask],
+        #go.Scatter(x=x1, y=y1,
             mode='lines+markers',
             name=y1_name.split('(')[1].split(')')[0],
             hovertemplate= '%{text}' + '<extra></extra>',
-            text= ['<b>{}</b> <br> {} {}'.format(y1_name.split(' (')[0], i, y1_unit) for i in data[first_y]]#y1_name.split('(')[1].split(')')[0]]*len(data[first_y])
+            #text= ['<b>{}</b> <br> {} {}'.format(y1_name.split(' (')[0], i, y1_unit) for i in data[first_y][nan_mask]]#y1_name.split('(')[1].split(')')[0]]*len(data[first_y])
+            text= ['<b>{}</b> <br> {} {}'.format(y1_name.split(' (')[0], i, y1_unit) for i in data[first_y][nan_mask]],
+            yaxis="y1"
         ),
-        secondary_y=False,
+        #secondary_y=False,
     )
-    # print(y1log, type(y1log))
 
+
+    y=data[second_y]
+    nan_mask = ~np.isnan(x) & ~np.isnan(y)
     fig.add_trace(
-        go.Scatter(x=data.Date, y=data[second_y],
+        go.Scatter(x=data.Date[nan_mask], y=data[second_y][nan_mask],
+        #go.Scatter(x=x1, y=y1,
             mode='lines+markers',
             name=y2_name.split('(')[1].split(')')[0],
             hovertemplate= '%{text}' + '<extra></extra>',
-            text= ['<b>{}</b> <br> {} {}'.format(y2_name.split(' (')[0], i, y2_unit) for i in data[second_y]]
+            text= ['<b>{}</b> <br> {} {}'.format(y2_name.split(' (')[0], i, y2_unit) for i in data[second_y][nan_mask]],
             # hovertemplate='%{y} <extra></extra>' + '%{text}',
             # text= [y2_name.split('(')[1].split(')')[0]]*len(data[second_y])
+            yaxis="y2"
         ),
-        secondary_y=True,
+        #secondary_y=True,
     )
+        # print(y1log, type(y1log))
+    
+    #fig.add_trace(
+    #    go.Scatter(x=dis_1.index, y=dis_1["discharge"],
+    #    #go.Scatter(x=x1, y=y1,
+    #        mode='lines',
+    #        name=y1_name.split('(')[1].split(')')[0],
+    #        #hovertemplate= '%{text}' + '<extra></extra>',
+    #        #text= ['<b>{}</b> <br> {} {}'.format(y1_name.split(' (')[0], i, y1_unit) for i in data[first_y][nan_mask]]#y1_name.split('(')[1].split(')')[0]]*len(data[first_y])
+    #        #text= ['<b>{}</b> <br> {} {}'.format(y1_name.split(' (')[0], i, y1_unit) for i in data[first_y][nan_mask]]#y1_name.split('(')[1].split(')')[0]]*len(data[first_y])
+    #    yaxis="y3"
+    #    ),
+        
+    #    #secondary_y=True,
+    #)
     fig.update_layout(
         title={'text': "Time Series", 'x': 0.5, 'y': 0.93},
         showlegend=False,
@@ -158,6 +204,7 @@ def update_time_series_plot(first_y, second_y, start, end, y1log, y2log):
         # plot_bgcolor='rgba(0,0,0,0)'
     )
     fig.update_xaxes(title_text="Time")
+    
 
     if y1log==['on']:
         y1type='log'
@@ -175,7 +222,7 @@ def update_time_series_plot(first_y, second_y, start, end, y1log, y2log):
     # print(first_y, y1_name)
 
     fig.update_yaxes(title_text=y1_name, color=muted_blue, secondary_y=False,
-    type=y1type, showgrid=True, gridwidth=1) #, gridcolor='lightblue', zerolinecolor='lightblue')
+    type=y1type, showgrid=False, gridwidth=1) #, gridcolor='lightblue', zerolinecolor='lightblue')
     fig.update_yaxes(title_text=y2_name, color=brick_red, secondary_y=True,
     type=y2type) #, gridcolor='lightpink', zerolinecolor='lightpink')
 
@@ -260,6 +307,7 @@ def update_scatter_plot(x_selected, y_selected, color, start, end, lin_fit, log_
     nan_mask = ~np.isnan(x) & ~np.isnan(y)
     x = x[nan_mask]
     y = y[nan_mask]
+    #print(x, y)
 
     # log colorbar
     if colorlog == ['on']:
