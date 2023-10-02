@@ -1,20 +1,24 @@
-Name,For Timeseries,For Scatter,Renamed (unit),Info
-ID,No,No,,
-Date,On x-axis by default,No,Datetime,
-Time (local),No,No,,
-Lat (DecDeg),No,No,,
-Lon (DecDeg),No,No,,
-Temp_degC (°C),Yes,Yes,Water temperature (°C),Measured in situ with a CastAway CTD
-Cond_µScm (µS/cm),Yes,Yes,Conductivity (µS/cm),Measured in situ with a CastAway CTD
-Discharge (m³/s),Yes,Yes,Discharge at East Channel (m³/s),Measured with the SonTek RiverSurveyor
-comments on sampling location,No,No,,
-comments on sampling situation,No,No,,
-sampled by,No,No,,
-GF-F_FilterID,No,No,,
-initialFilter-weight_g,No,No,,
-FilteredVolume_ml,No,No,,
-comment on filtering process,No,No,,
-Day of Year,No,Yes,Day of year (JJJ),Day of year
-Year,No,Yes,Year (YYY),Year
-Month,No,Yes,Month (MM),Month
-Discharge,Yes,Yes,Discharge (m³/s),Discharge data is taken from ArcticGRO (Shicklomanov et al. 2021).
+Name;For Timeseries;For Scatter;Renamed (unit);Info
+ID;No;No;;Running number for samples
+Date;On x-axis by default;No;Datetime;Local date
+Time (local);No;No;;Local time
+Lat (DecDeg);No;No;;Measured with CastAway CTD
+Lon (DecDeg);No;No;;Measured with CastAway CTD
+Temperature (°C);Yes;Yes;Water temperature (°C);Measured in situ with a CastAway CTD
+EC (µS/cm);Yes;Yes;Electrical Conductivity (µS/cm);Measured in situ with a CastAway CTD
+Discharge (m³/s);No;No;Discharge at East Channel (m³/s);Measured with the SonTek RiverSurveyor
+comments on sampling location;No;No;;
+comments on sampling situation;No;No;;
+sampled by;No;No;;
+GF-F_FilterID;No;No;;
+initialFilter-weight_g;No;No;;
+FilteredVolume_ml;No;No;;
+comment on filtering process;No;No;;
+SPM (mg/L);Yes;Yes;SPM concentration (mg/L);Suspended sediment concentration - weighted particles on filter
+aCDOM(254) (1/m);Yes;Yes;CDOM absorption at 254nm (m-1);measured with a spectrophotometer
+DOC (mg/L);Yes;Yes;Dissolved organic carbon concentration (mg/L);DOC samples were filled into a pre-rinsed 20 mL glass vial and acidified with 25 uL HCl Suprapur (10 M) and stored in the dark at 4degC. After transport DOC samples were analyzed at the Alfred Wegener Institute Potsdam Helmholtz Center for Polar and Marine Research (AWI) Germany. DOC concentrations were analyzed using high temperature catalytic oxidation (TOC-VCPH Shimadzu).
+TDN (mg/L);Yes;Yes;Total dissolved nitrogen (mg/l);measured at AWI
+Day of Year;No;Yes;Day of Year (JJJ);Day of year
+Year;No;Yes;Year (YYY);Year
+Month;No;Yes;Month (MM);Month
+Discharge;Yes;Yes;Discharge (m³/s);Discharge data is taken from ArcticGRO (Shicklomanov et al. 2021).
