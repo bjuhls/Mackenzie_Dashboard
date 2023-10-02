@@ -13,7 +13,7 @@ import os
 
 
 # import data
-df = pd.read_csv('data/DUCCEM_sampling_list.csv', parse_dates=['Date'], na_values='n.a.', sep=",")
+df = pd.read_csv('data/DUCCEM_sampling_list.csv', parse_dates=['Date'], na_values='n.a.', sep=";")
 df['Day of Year'] = df.Date.dt.dayofyear
 df['Year'] = df.Date.dt.year
 df['Month'] = df.Date.dt.month
@@ -28,7 +28,7 @@ df['Discharge'] = dis.loc[list(df.Date)].discharge.values
 
 
 # import parameter information
-info = pd.read_csv('data/Parameter_Info_Mackenzie.csv', sep=",")
+info = pd.read_csv('data/Parameter_Info_Mackenzie.csv', sep=";")
 #print(df.columns.values)
 #print(info.Name.values)
 
@@ -64,7 +64,7 @@ for c in df.columns:
 used_cols = sorted([col for col in df.columns if col not in not_used], key=str.casefold)
 
 
-info = pd.read_csv('data/Parameter_Info_Mackenzie.csv')
+#info = pd.read_csv('data/Parameter_Info_Mackenzie.csv')
 
 # images for slideshow
 image_list = os.listdir('assets/Pictures/compressed')

@@ -25,7 +25,7 @@ import os
 
 
 # import data
-df = pd.read_csv('data/DUCCEM_sampling_list.csv', parse_dates=['Date'], na_values='n.a.', sep=",")
+df = pd.read_csv('data/DUCCEM_sampling_list.csv', parse_dates=['Date'], na_values='n.a.', sep=";")
 df['Day of Year'] = df.Date.dt.dayofyear
 df['Year'] = df.Date.dt.year
 df['Month'] = df.Date.dt.month
@@ -34,7 +34,7 @@ dis = pd.read_csv('data/Mackenzie_ArcticRedRiver_Version_20230809.csv',
     parse_dates=['date'], index_col='date', sep=";"
 )
 df['Discharge'] = dis.loc[list(df.Date)].discharge.values
-param_info = pd.read_csv('data/Parameter_Info_Mackenzie.csv', index_col='Name', sep=",")
+param_info = pd.read_csv('data/Parameter_Info_Mackenzie.csv', index_col='Name', sep=";")
 
 # define columns to use
 not_used = set()
@@ -46,7 +46,7 @@ for c in df.columns:
 used_cols = sorted([col for col in df.columns if col not in not_used], key=str.casefold)
 
 # import parameter information
-info = pd.read_csv('data/Parameter_Info_Mackenzie.csv', sep=",")
+info = pd.read_csv('data/Parameter_Info_Mackenzie.csv', sep=";")
 
 ts_mask = info['For Timeseries']=='Yes'
 sc_mask = info['For Scatter']=='Yes'
