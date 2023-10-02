@@ -13,7 +13,7 @@ import os
 
 
 # import data
-df = pd.read_csv('data/DUCCEM_sampling_list.csv', parse_dates=['Date'], na_values='n.a.', sep=";")
+df = pd.read_csv('data/DUCCEM_sampling_list.csv', parse_dates=['Date'], na_values='n.a.', sep=",")
 df['Day of Year'] = df.Date.dt.dayofyear
 df['Year'] = df.Date.dt.year
 df['Month'] = df.Date.dt.month
@@ -279,7 +279,7 @@ main_page = dbc.Container([
                         ],
                         multi=False,
                         style={'width': '100%'},
-                        value='Cond_µScm (µS/cm)',
+                        value='EC (µS/cm)',
                         className='dropdown',
                     ),
                     html.P('Select Time Window', className='menu-title'),
@@ -404,7 +404,7 @@ main_page = dbc.Container([
                         ],
                         multi=False,
                         style={'width': '100%'},
-                        value='Temp_degC (°C)',
+                        value='Temperature (°C)',
                         # value = 'Temperature (°C)',
                         # value = 'Conductivity lab (µS/cm)',
                         className='dropdown',
@@ -432,7 +432,7 @@ main_page = dbc.Container([
                         ],
                         multi=False,
                         style={'width': '100%'},
-                        value='Cond_µScm (µS/cm)',
+                        value='EC (µS/cm)',
                         # value = 'Temperature (°C)',
                         # value = 'logy_artificial',
                         # value = 'Conductivity in situ (µS/cm)',
