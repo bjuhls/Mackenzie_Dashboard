@@ -23,10 +23,8 @@ df['Month'] = df.Date.dt.month
 dis = pd.read_csv('data/Mackenzie_ArcticRedRiver_Version_20230809.csv',
     parse_dates=['date'], index_col='date', sep=";"
 )
-
-df['Discharge'] = dis.loc[list(df.Date)].discharge.values
 #print(list(df.Date))
-#print(dis.iloc['date'])
+df['Discharge'] = dis.loc[list(df.Date)].discharge.values
 
 
 # import parameter information
@@ -812,25 +810,10 @@ team_page = dbc.Container([
                          ]),
                          xl=3, lg=3, md=4, sm=6, xs=12
                      ),
-                     ],
-                    justify='center',
-                ),
+                ],
+                justify='center'),
+                
                 dbc.Row([
-                     dbc.Col(
-                         dbc.Card([
-                             dbc.CardImg(src='assets/Foto SRokitta and Nicolas the Seal.jpg'),
-                             dbc.CardBody([
-                                 html.H5('Sebastian Rokitta'), # pay attention to name legth
-                                 html.H6('Senior scientist'),
-                                 html.P('Alfred Wegener Institute, Helmholtz Centre for Polar and Marine Research (AWI)'),
-                                html.A('Personal institute page', href='https://www.awi.de/ueber-uns/organisation/mitarbeiter/detailseite/sebastian-rokitta.html', target='_blank')
-                             ],
-                             className='team-card'
-                             )
-
-                         ]),
-                         xl=3, lg=3, md=4, sm=6, xs=12
-                     ),
                      dbc.Col(
                          dbc.Card([
                              dbc.CardImg(src='assets/Julie.png'),
