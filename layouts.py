@@ -180,37 +180,44 @@ footer = dbc.Container(
                     href='https://www.awi.de/en/',
                     target="_blank"
                     ),
-                width=1
+                # width=1
             ),
             dbc.Col(
-                html.A(
-                    html.Img(src='assets/ARI_logo.png',
-                        className='footer-image',
-                        # style={'height': '50px'},
-                        title='Western Arctic Research Centre (WARC)'),
-                    href='https://nwtresearch.com/about/regional-research-centres/western-arctic-research-centre',
-                    target="_blank"
+                html.P([
+                    html.A('Imprint', href="/imprint",
+                        style={"color": "#28b4e6", 'font-size': '17px'}
+                        )
+                        ])
+                    # width=2
                     ),
-                width=0.5
-            ),
             dbc.Col(
-                html.A(
-                    html.Img(src='assets/Interact_logo.png',
-                        className='footer-image',
-                        # style={'height': '50px'},
-                        title='Funded by EU Interact project'),
-                    href='https://eu-interact.org/',
-                    target="_blank"
+                html.P([
+                    html.A('Accessibility', href="/accessibility",
+                        style={"color": "#28b4e6", 'font-size': '17px'}
+                        )
+                        ])
+                    # width=2
                     ),
-                width=1
-            ),
-        ],
-        justify='around',
+            dbc.Col(
+                html.P([
+                    html.A('Privacy Notice', href= 'https://www.awi.de/en/privacy-protection.html' ,
+                            style={"color": "#28b4e6", 'font-size': '17px'}
+                            )
+                            ]),
+                        # width=2
+                    ),
+            
+                ],
+        justify='center',
         align='center',
-        ),
+                ),
+
     ],
     className='footer'
 )
+
+
+
 
 
 # layout of the main page
@@ -661,6 +668,60 @@ main_page = dbc.Container([
                         ],
                     xl=6, lg=6, md=10, sm=12, xs=12
                     ), # end of col
+                    
+                    dbc.Col(
+                        [
+                            # ARI
+                            dcc.Link(
+                            dbc.Card(
+                                className='internal-card',
+                                children=[
+                                dbc.CardImg(src="assets/ARI_logo.png", top=True, className='preview-image'),
+                                dbc.CardBody([
+                                    html.P(
+                                        "Visit the webpage of our Partner for the water sampling in Inuvik",
+                                        className="text",
+                                        )
+                                ]),
+                            ],
+                            ),
+                            href='https://nwtresearch.com/about/regional-research-centres/western-arctic-research-centre',
+                            target="_blank",
+                            style={'color':darklink}
+                            ),
+                            html.Div(style={'margin-top': '20px'}),
+                            #
+                        ],
+                    xl=6, lg=6, md=10, sm=12, xs=12
+                    ), # end of col
+                    
+                    dbc.Col(
+                        [
+                            # Interact
+                            dcc.Link(
+                            dbc.Card(
+                                className='internal-card',
+                                children=[
+                                dbc.CardImg(src="assets/Interact_logo.png", top=True, className='preview-image'),
+                                dbc.CardBody([
+                                    html.P(
+                                        "This project received fundings by INTERACT",
+                                        className="text",
+                                        )
+                                ]),
+                            ],
+                            ),
+                            href='https://eu-interact.org/',
+                            target="_blank",
+                            style={'color':darklink}
+                            ),
+                            html.Div(style={'margin-top': '20px'}),
+                            #
+                        ],
+                    xl=6, lg=6, md=10, sm=12, xs=12
+                    ), # end of col
+                    
+                                
 
                 ],
                 justify='around'
@@ -674,7 +735,9 @@ main_page = dbc.Container([
     footer
 
 
+
 ])
+
 
 
 # layout of the team page
@@ -856,3 +919,86 @@ team_page = dbc.Container([
     footer
 
 ])
+
+
+
+# layout of the imprint page
+
+
+imprint_page = dbc.Container([
+    navbar,
+    header[0],
+
+    dbc.Card(children=[
+        dbc.CardHeader(html.H4('Imprint')),
+        dbc.CardBody(children=[
+                        html.B(['Address'],
+                        style={'font-size': '18px',"width": "100%","opacity": "unset"}
+                                ),
+                        html.P(['Alfred-Wegener-Institut', html.Br(),'Helmholtz Centre for Polar and Marine Research', html.Br(),' Am Handelshafen 12', html.Br(),'27570 Bremerhaven', html.Br(), 'Germany', html.Br(), html.Br(),'Tel.: +49 (0)471 4831-0', html.Br(),'Fax: +49 (0)471 4831-1149', html.Br(),'E-Mail: info@awi.de', html.Br(), html.A('www.awi.de', href= 'https://www.awi.de/en/' ,style={"color": "black"})
+                        ]),
+                        html.B(['Legal form'], style={'font-size': '18px',"width": "100%","opacity": "unset"}),
+                        html.P(['The Alfred Wegener Institute is a foundation under public law. (Stiftung des öffentlichen Rechts) The AWI is a member of the Helmholtz Association of German Research Centres.']),
+                        
+                        html.B(['Representatives'], style={'font-size': '18px',"width": "100%","opacity": "unset"}),
+                        html.P(['The Alfred Wegener Institute is legally represented by its Directorate:', html.Br(),'Prof. Dr. Antje Boetius (Director)', html.Br(),'Dr. Karsten Wurr (Administrative Director)', html.Br(), html.B('VAT'), ' identification number according to § 27a Umsatzsteuergesetz: DE 114707273']),
+                        
+                        html.B(['Editorial responsibility'], style={'font-size': '18px',"width": "100%","opacity": "unset"}),
+                        html.P(['Bennet Juhls (bennet.juhls@awi.de)']),
+                        
+                        html.B(['Copyright'], style={'font-size': '18px',"width": "100%","opacity": "unset"}),
+                        html.P(['The content of all web pages of this website is protected by copyright. All illustrations and images on the websites of the Alfred Wegener Institute may not be copied, reproduced or distributed without the permission of the AWI. A change of the meta data (IPTC data incl. naming of originator, source, copyright notice and terms of use) of the images is not permitted.']),
+                        
+                        html.B(['Rights of use'], style={'font-size': '18px',"width": "100%","opacity": "unset"}),
+                        html.P(['The Alfred Wegener Institute authorises the following ',html.B('private use'),' of images on this website:', html.Br(), '- copying the images to your private computer', html.Br(), '- the printing of images for private archiving or decoration purposes', html.Br(), '- the forwarding of the images to friends and family, together with reference to their origin, mention of the copyright notice and reference to the purely private use requirement.',html.Br(),html.Br(),'The Alfred Wegener Institute authorises the following free use of images in the press section of this website for editorial journalistic publications under the following conditions:',html.Br(),'- The images used illustrate contributions about the work of the Alfred Wegener Institute.',html.Br(),'- The complete copyright notice is named as deposited in the metadata (IPTC data), i.e. in the form "Alfred-Wegener-Institute/Surname, first name"',html.Br(),'- the short form "AWI/Surname " may only be used if the full name of the institute is mentioned together with the abbreviation in the article.',html.Br(),html.Br(),'Images under a Creative Commons license may be used according to the license used.',html.Br(),html.Br(),'In general, the Alfred Wegener Institute',html.B(' does not '),'grant permission to use images on this website for the following purposes:',html.Br(),'- Advertising, design of advertisements, commercials etc.',html.Br(),'- Sale of products in which the focus is on images (T-shirts, coffee cups, large prints)',html.Br(),'- Sale of digital copies of image data.']),
+                        
+                        html.B(['Liability notice'], style={'font-size': '18px',"width": "100%","opacity": "unset"}),
+                        html.P(['No liability is assumed for completeness, editorial and technical errors, topicality, omissions, etc. or the accuracy of the content, unless the author can be proven to have acted with intent or gross negligence.'])         
+                    ])
+                ]),
+  
+    footer
+
+])
+
+
+
+# layout of the Accessibility page
+
+
+accessibility_page = dbc.Container([
+    navbar,
+    header[0],
+
+    dbc.Card(children=[
+        dbc.CardHeader(html.H4('Accessibility')),
+        dbc.CardBody(children=[
+        
+        
+                        html.B(['Compliance status'], style={'font-size': '18px',"width": "100%","opacity": "unset"}),
+                        html.P(['This website is partially compliantiv with BITV 2.0, due to the non-compliances and/or the exemptions listed below.']),
+
+                        html.B(['Non-accessible content'], style={'font-size': '18px',"width": "100%","opacity": "unset"}),
+                        html.P(['The content listed below is non-accessible for the following reason(s):', html.Br(), 'non-compliance with the BITV 2.0']),
+
+                        html.H6(['1. Color contrast'], style={'font-size': '16px',"width": "100%","opacity": "unset"}),
+                        html.P(['Description: Contrast between text color and background color is insufficient for some elements.', html.Br(), 'Measure: Introduction of a button to see a high-contrast color variant.']),
+
+                        html.H6(['2. Missing alternative texts'], style={'font-size': '16px',"width": "100%","opacity": "unset"}),
+                        html.P(['Description: Many visual elements lack a corresponding alternative text.']),
+                                        
+                        html.B(['Feedback and contact information:'],
+                        style={'font-size': '18px',"width": "100%","opacity": "unset"}
+                                ),
+                        html.P(['We would like to further improve our offer. Feel free to share your digital accessibility issues and questions with us: barrierefreiheit@awi.de'
+                        ]),
+
+                        
+                    ])
+                ]),
+  
+    footer
+
+])
+
+
