@@ -1,0 +1,259 @@
+/* @import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;700&display=swap"); */
+
+/* @media screen and (max-width: 992px) {
+
+.header-image {
+    display: none;
+} */
+
+
+
+:root {
+  --first: #3d837f;
+  --second: #dbe7f5
+}
+
+body {
+    font-family: "Lato", sans-serif;
+    font-display: optional;
+    margin: 0;
+    /* background-color/: #F7F7F7; */
+    background-image: url('background_image.png');
+    background-size: cover;
+}
+
+.header-image {
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 1024px;
+    padding-right: 10px;
+    padding-left: 10px;
+    margin-top: 32px;
+    margin-bottom: 10px;
+    text-align: center;
+
+}
+
+.header {
+    background-color: var(--first);
+    min-height: 256px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 0px;
+    margin-top: -30px;
+}
+
+.header-emoji {
+    font-size: 48px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.header-title {
+    color: #FFFFFF;
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.header-description {
+    color: #FFFFFF;
+    margin: 4px auto;
+    text-align: center;
+    max-width: 384px;
+}
+
+/* .wrapper {
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 1024px;
+    padding-right: 10px;
+    padding-left: 10px;
+    margin-top: 32px;
+} */
+
+.card {
+    margin-bottom: 0px;
+    margin-top: 24px;
+    padding-bottom: 0px;
+    box-shadow: 2px 4px 10px 0 rgba(0, 0, 0, 0.18);
+    justify-content: center;
+}
+
+.internal-card {
+    margin-bottom: 0px;
+    margin-top: 0px;
+    padding-bottom: 0px;
+    box-shadow: 2px 4px 10px 0 rgba(0, 0, 0, 0.18);
+    justify-content: center;
+}
+
+.fit-card {
+    margin-bottom: 6px;
+    margin-top: 24px;
+    padding-bottom: 0px;
+    box-shadow: 2px 4px 10px 0 rgba(0, 0, 0, 0.18);
+    justify-content: center;
+}
+
+.param-card {
+    margin-bottom: 6px;
+    margin-top: 24px;
+    padding-bottom: 0px;
+    box-shadow: 2px 4px 10px 0 rgba(0, 0, 0, 0.18);
+    justify-content: center;
+}
+
+.menu {
+    display: flex;
+    justify-content: space-evenly;
+    padding-top: 24px;
+    padding-bottom: 10px;
+    margin: 0 auto 0 auto;
+    background-color: #FFFFFF;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.slider-menu {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 12px auto 12px auto;
+    margin: 0 auto 0 auto;
+    background-color: #FFFFFF;
+}
+
+.menu-title {
+    margin-top: 10px;
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: var(--first);
+    text-align: left;
+}
+
+
+.footer {
+    background-color: var(--second);
+    height: 64px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 24px
+}
+
+.footer-text {
+    color: #FFFFFF;
+    margin: 4px auto;
+    text-align: center;
+}
+
+.button {
+    background-color: var(--second);
+    color: var(--first);
+}
+
+.button-single {
+    background-color: var(--second);
+    color: var(--first);
+    width: 45%;
+}
+
+.text-button {
+    background-color: white;
+    color: blue;
+    border: 0px;
+    margin-bottom: 2px;
+    hover {
+      color: white
+    }
+}
+
+.text {
+    margin-bottom: -6px;
+}
+
+.img-text {
+    margin-bottom: -0px;
+    text-align: center;
+    align-items: center;
+}
+
+.info-card {
+    margin-bottom: 0px;
+}
+
+.team-card {
+    margin-bottom: 0px;
+}
+
+.image {
+    display: inline-block;
+    width: 20%;
+    height: 150px;
+
+}
+
+.slider {
+    margin-bottom: 40px;
+    margin: 0 auto 20px auto;
+}
+
+
+.Select-control {
+    width: 256px;
+    height: 48px;
+}
+
+.Select--single > .Select-control .Select-value, .Select-placeholder {
+    line-height: 48px;
+}
+
+.Select--multi .Select-value-label {
+    line-height: 32px;
+}
+
+
+.text-image-holder {
+    margin-bottom: 24px;
+    box-shadow: 2px 4px 10px 0 rgba(0, 0, 0, 0.18)/*#96bf23*/;
+    display: flex;
+    justify-content: space-evenly;
+    padding-top: 24px;
+    padding-bottom: 10px;
+    background-color: #FFFFFF;
+    padding-right: 10px;
+    padding-left: 10px;
+    min-width: 1000px;
+}
+
+.a {
+    color: black;
+    font-weight: normal
+}
+
+.fit-text {
+    text-align: center;
+}
+
+.preview-image {
+    width: 90%;
+    padding-left: 10%;
+    padding-top: 5%;
+    padding-bottom: 0%;
+}
+
+.slideshow-image {
+    max-height:500px;
+    box-sizing: border-box;
+    resize: horizontal;
+    overflow: auto;
+    max-width: 100%;
+    justify-content: center;
+}
+
+.footer-image {
+    max-height: 50px;
+    max-width: 600%
+}

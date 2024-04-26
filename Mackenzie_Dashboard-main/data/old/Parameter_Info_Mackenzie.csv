@@ -1,0 +1,23 @@
+Name,For Timeseries,For Scatter,Renamed (unit),Info
+ID,No,No,,
+Date,On x-axis by default,No,Datetime,
+Time (local),No,No,,
+Lat (DecDeg),No,No,,
+Lon (DecDeg),No,No,,
+Temp_degC (degC),Yes,Yes,Water temperature (°C),Measured in situ with a CastAway CTD
+Cond_microS/cm (microS/cm),Yes,Yes,Conductivity (µS/cm),Measured in situ with a CastAway CTD
+Discharge (m3/s),Yes,Yes,Discharge at East Channel (m³/s),Measured with the SonTek RiverSurveyor
+comments on sampling location,No,No,,
+comments on sampling situation,No,No,,
+sampled by,No,No,,
+GF-F_FilterID,No,No,,
+initialFilter-weight_g,No,No,,
+FilteredVolume_ml,No,No,,
+comment on filtering process,No,No,,
+SPM concentration (mg/L),Yes,Yes,SPM concentration (mg L-1),weighted particles on filter
+aCDOM(254) (m-1),Yes,Yes,CDOM absorption at 254nm (m-1),measured with a spectrophotometer
+DOC (mg/L),Yes,Yes,Dissolved organic carbon concentration (mg/L),DOC samples were filled into a pre-rinsed 20 mL glass vial and acidified with 25 uL HCl Suprapur (10 M) and stored in the dark at 4degC. After transport  DOC samples were analyzed at the Alfred Wegener Institute  Potsdam Helmholtz Center for Polar and Marine Research (AWI)  Germany. DOC concentrations were analyzed using high temperature catalytic oxidation (TOC-VCPH Shimadzu).
+Day of Year,No,Yes,Day of year (JJJ),Day of year
+Year,No,Yes,Year (YYY),Year
+Month,No,Yes,Month (MM),Month
+Discharge,Yes,Yes,Discharge (m³/s),Discharge data is taken from ArcticGRO (Shicklomanov et al. 2021).
