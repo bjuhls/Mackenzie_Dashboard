@@ -93,7 +93,7 @@ navbar = dbc.NavbarSimple(
         #dbc.NavItem(dbc.NavLink("Download", href="/#download", external_link=True)),
         #dbc.NavItem(dbc.NavLink("The Station", href="/#the-station", external_link=True)),
         dbc.NavItem(dbc.NavLink("Related Info", href="/#related-info", external_link=True)),
-        dbc.NavItem(dbc.NavLink("Team", href="/team", external_link=True, target='_blank', disabled=False)),
+        dbc.NavItem(dbc.NavLink("Team", href="/team", external_link=True)), #target='_blank' ->add if you want to open a new tab
         dbc.DropdownMenu(
             children=[
                 dbc.DropdownMenuItem("Email", header=True),
@@ -140,7 +140,7 @@ header = dbc.Container([
                     #children=[
                     ['The research leading to these results has received funding from the European ',
                       'Union’s Horizon 2020 project Interact under grant agreement No 730938, click for more info about ', 
-                      html.A( ' INTERACT', href='https://eu-interact.org/',
+                      html.A( ' INTERACT', href='https://eu-interact.org/', target='_blank', 
                       style={"color": "black"}
                       )
                     ],
@@ -200,7 +200,7 @@ footer = dbc.Container(
                     ),
             dbc.Col(
                 html.P([
-                    html.A('Privacy Notice', href= 'https://www.awi.de/en/privacy-protection.html' ,
+                    html.A('Privacy Notice', href= 'https://www.awi.de/en/privacy-protection.html' , target='_blank',
                             style={"color": "#28b4e6", 'font-size': '17px'}
                             )
                             ]),
@@ -935,7 +935,7 @@ imprint_page = dbc.Container([
                         html.B(['Address'],
                         style={'font-size': '18px',"width": "100%","opacity": "unset"}
                                 ),
-                        html.P(['Alfred-Wegener-Institut', html.Br(),'Helmholtz Centre for Polar and Marine Research', html.Br(),' Am Handelshafen 12', html.Br(),'27570 Bremerhaven', html.Br(), 'Germany', html.Br(), html.Br(),'Tel.: +49 (0)471 4831-0', html.Br(),'Fax: +49 (0)471 4831-1149', html.Br(),'E-Mail: info@awi.de', html.Br(), html.A('www.awi.de', href= 'https://www.awi.de/en/' ,style={"color": "black"})
+                        html.P(['Alfred-Wegener-Institut', html.Br(),'Helmholtz Centre for Polar and Marine Research', html.Br(),' Am Handelshafen 12', html.Br(),'27570 Bremerhaven', html.Br(), 'Germany', html.Br(), html.Br(),'Tel.: +49 (0)471 4831-0', html.Br(),'Fax: +49 (0)471 4831-1149', html.Br(),'E-Mail: info@awi.de', html.Br(), html.A('www.awi.de', href= 'https://www.awi.de/en/' ,target='_blank',style={"color": "black"})
                         ]),
                         html.B(['Legal form'], style={'font-size': '18px',"width": "100%","opacity": "unset"}),
                         html.P(['The Alfred Wegener Institute is a foundation under public law. (Stiftung des öffentlichen Rechts) The AWI is a member of the Helmholtz Association of German Research Centres.']),
