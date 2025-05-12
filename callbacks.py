@@ -521,8 +521,14 @@ def update_scatter_plot(x_selected, y_selected, color, start, end, lin_fit, log_
     else:
         pow_collapse=False
 
+    scatter.update_coloraxes(
+        colorbar_title_side='right',
+        colorbar_title=c_name, 
+        colorbar_tickprefix=tp,
+        colorbar_title_font_size=20,
+    )
+    
     scatter.update_layout(
-        coloraxis_colorbar={'title':c_name, 'tickprefix':tp, 'titleside':'right', 'thickness': 20},
         title={'text': f"{y_name.split('(')[0]} vs. {x_name.split('(')[0]}", 'x': 0.5, 'y': 0.93},
         legend={'x':0.02, 'y':0.98, 'xanchor':'left', 'yanchor':'top'},
         margin=dict(b=65, r=0),
