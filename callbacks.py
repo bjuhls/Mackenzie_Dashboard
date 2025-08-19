@@ -25,16 +25,25 @@ import os
 
 
 # import data
-df = pd.read_csv('data/DUCCEM_sampling_list.csv', parse_dates=['Date'], na_values='n.a.', sep=";")
+# import as excel file (csv version commented out)
+excel_folder = 'data/DUCCEM_sampling_list_all_#75_5.xlsx'
+df = pd.read_excel(excel_folder, sheet_name='DUCCEM_liveResults', parse_dates=['Date'], na_values='n.a.')
+
+#df = pd.read_csv('data/DUCCEM_sampling_list_#75_4.csv', parse_dates=['Date'], na_values='n.a.', sep=",")
 df['Day of Year'] = df.Date.dt.dayofyear
 df['Year'] = df.Date.dt.year
 df['Month'] = df.Date.dt.month
 
-dis = pd.read_csv('data/Mackenzie_ArcticRedRiver_Version_20230809.csv',
-    parse_dates=['date'], index_col='date', sep=";"
-)
+#dis = pd.read_csv('data/Mackenzie_ArcticRedRiver_Version_2025.csv', parse_dates=['date'], index_col='date', sep=";")
+dis = pd.read_excel(excel_folder, sheet_name='Discharge_Gauge', parse_dates=['date'], index_col='date')
+
 df['Discharge'] = dis.loc[list(df.Date)].discharge.values
-param_info = pd.read_csv('data/Parameter_Info_Mackenzie.csv', index_col='Name', sep=";")
+df['Discharge'] = pd.to_numeric(df['Discharge'], errors='coerce')
+
+#param_info = pd.read_csv('data/Parameter_Info_Mackenzie_2025_4.csv', index_col='Name', sep=",")
+#Import Parameter Info
+param_info = pd.read_excel(excel_folder, sheet_name='Parameter_Info', index_col='Name')
+
 
 # define columns to use
 not_used = set()
@@ -46,7 +55,8 @@ for c in df.columns:
 used_cols = sorted([col for col in df.columns if col not in not_used], key=str.casefold)
 
 # import parameter information
-info = pd.read_csv('data/Parameter_Info_Mackenzie.csv', sep=";")
+#info = pd.read_csv('data/Parameter_Info_Mackenzie_2025_4.csv', sep=",")
+info = param_info = pd.read_excel(excel_folder, sheet_name='Parameter_Info')
 
 ts_mask = info['For Timeseries']=='Yes'
 sc_mask = info['For Scatter']=='Yes'
@@ -80,6 +90,21 @@ theme_second = '#dbe7f5'
 muted_blue = 'royalblue'
 brick_red = 'crimson'
 darklink = '#373a3c'
+
+# clean values 
+def clean_to_float(value):
+    try:
+        # Wenn der Wert ein String ist und '<' enthält, dann NaN zurückgeben
+        if isinstance(value, str) and '<' in value:
+            return np.nan
+        
+        # Leere Strings oder None ebenfalls als NaN
+        if value == '' or value is None:
+            return np.nan
+        
+        return float(value)
+    except Exception:
+        return np.nan  
 
 
 # Time series plot
@@ -129,13 +154,20 @@ def update_time_series_plot(first_y, second_y, start, end, y1log, y2log):
     time_mask2 = (pd.to_datetime(dis.index) >= datetime.datetime.strptime(start, '%Y-%m-%d')) & (pd.to_datetime(dis.index) <= datetime.datetime.strptime(end, '%Y-%m-%d'))
     
     dis_1 = dis[time_mask2]
-    print(dis_1)
-    
-    x=data.Date
-    y=data[first_y]
-    nan_mask = ~np.isnan(x) & ~np.isnan(y)
-    x1 = x[nan_mask]
-    y1 = y[nan_mask]
+    #print(dis_1)
+    data[first_y] = data[first_y].apply(clean_to_float)
+
+    x = data.Date
+    y = data[first_y]
+    nan_mask = ~pd.isna(x) & ~pd.isna(y)
+    x = x[nan_mask]
+    y = y[nan_mask]
+    #y = y.to_numpy()
+    #x = x.to_numpy()
+
+    #x1 = x[nan_mask]
+    #y1 = y[nan_mask]
+  
     #print("original y")
     #print(data[second_y])
     #print("x")
@@ -152,7 +184,7 @@ def update_time_series_plot(first_y, second_y, start, end, y1log, y2log):
  
     fig = make_subplots(specs=[[{"secondary_y": True}]])
     fig.add_trace(
-        go.Scatter(x=data.Date[nan_mask], y=data[first_y][nan_mask],
+        go.Scatter(x=x, y=y,
         #go.Scatter(x=x1, y=y1,
             mode='lines+markers',
             name=y1_name.split('(')[1].split(')')[0],
@@ -164,11 +196,15 @@ def update_time_series_plot(first_y, second_y, start, end, y1log, y2log):
         #secondary_y=False,
     )
 
-
+    data[second_y] = data[second_y].apply(clean_to_float)
     y=data[second_y]
-    nan_mask = ~np.isnan(x) & ~np.isnan(y)
+    y=y[nan_mask]
+    #nan_mask = ~pd.isna(x) & ~pd.isna(y)
+    #y = y[nan_mask]
+    y = y.to_numpy()
+
     fig.add_trace(
-        go.Scatter(x=data.Date[nan_mask], y=data[second_y][nan_mask],
+        go.Scatter(x=x, y=y,
         #go.Scatter(x=x1, y=y1,
             mode='lines+markers',
             name=y2_name.split('(')[1].split(')')[0],
@@ -196,7 +232,7 @@ def update_time_series_plot(first_y, second_y, start, end, y1log, y2log):
     #    #secondary_y=True,
     #)
     fig.update_layout(
-        title={'text': "Time Series", 'x': 0.5, 'y': 0.93},
+        #title={'text': "Time Series", 'x': 0.5, 'y': 0.93},
         showlegend=False,
         paper_bgcolor='rgba(0,0,0,0)',
         margin=dict(t=60, b=10, l=10, r=10),
@@ -302,11 +338,17 @@ def update_scatter_plot(x_selected, y_selected, color, start, end, lin_fit, log_
     time_mask = (pd.to_datetime(data.Date.dt.date) >= datetime.datetime.strptime(start, '%Y-%m-%d')) & (pd.to_datetime(data.Date.dt.date) <= datetime.datetime.strptime(end, '%Y-%m-%d'))
     data = data[time_mask]
 
-    x=data[x_selected]
-    y=data[y_selected]
-    nan_mask = ~np.isnan(x) & ~np.isnan(y)
+    data[x_selected] = data[x_selected].apply(clean_to_float)
+    data[y_selected] = data[y_selected].apply(clean_to_float)
+
+    x = data[x_selected]
+    y = data[y_selected]
+
+    # remove NaN 
+    nan_mask = ~pd.isna(x) & ~pd.isna(y)
     x = x[nan_mask]
     y = y[nan_mask]
+
     #print(x, y)
 
     # log colorbar
@@ -327,7 +369,7 @@ def update_scatter_plot(x_selected, y_selected, color, start, end, lin_fit, log_
 
     scatter.update_traces(
         name='sample points',
-        showlegend = True,
+        showlegend = False,
         hovertemplate=''.join([
             '<b>{}:</b> {} {}<br>'.format(x_name.split(' (')[0], '%{x}', x_unit),
             '<b>{}:</b> {} {}<br>'.format(y_name.split(' (')[0], '%{y}', y_unit),
@@ -348,7 +390,6 @@ def update_scatter_plot(x_selected, y_selected, color, start, end, lin_fit, log_
         ystyle={}
     else:
         ystyle={'opacity':0.5}
-
 
     # linear fit
     linfit = linregress(x, y)
@@ -384,6 +425,7 @@ def update_scatter_plot(x_selected, y_selected, color, start, end, lin_fit, log_
     else:
         lin_collapse=False
 
+   
     # logarithmic fit
     def logfit(x, m, n):
         return m * np.log(x) + n
@@ -452,10 +494,12 @@ def update_scatter_plot(x_selected, y_selected, color, start, end, lin_fit, log_
 
 
     # power fit
-    x=data[x_selected]
-    y=data[y_selected]
     def pow(x, a, b, c):
         return a * np.power(x, b) + c
+
+    mask = x > 0
+    x = x[mask]
+    y = y[mask]
 
     powfitcard_failed = dbc.Card(
         className='fit-card',
@@ -473,44 +517,60 @@ def update_scatter_plot(x_selected, y_selected, color, start, end, lin_fit, log_
         color="danger",
         outline=True
     ),
+    
+    #try:
+        #ppopt, ppcov = curve_fit(pow, x, y)
+        #pperr = np.sqrt(np.diag(ppcov))
+        #res = y - pow(x, *ppopt)
+        #sqsum_res = np.sum(res**2)
+        #sqsum_tot = np.sum((y-np.mean(y))**2)
+        #Rsq_pow = 1 - sqsum_res/sqsum_tot
 
-    try:
-        ppopt, ppcov = curve_fit(pow, x[nan_mask], y[nan_mask])
-        pperr = np.sqrt(np.diag(ppcov))
-        res = y - pow(x, *ppopt)
-        sqsum_res = np.sum(res**2)
-        sqsum_tot = np.sum((y-np.mean(y))**2)
-        Rsq_pow = 1 - sqsum_res/sqsum_tot
+    #except RuntimeError:
+        #powfitcard = powfitcard_failed
 
-    except RuntimeError:
+        #pperr = [np.inf, np.inf] # again messy!
+    
+    # ensure that we have the needed number of data points for the power function
+    if len(x) <= 3:
         powfitcard = powfitcard_failed
-
-        pperr = [np.inf, np.inf] # again messy!
-
-
-
-
-    if pperr[0]+pperr[1] != np.inf:
-
-        powfitcard = dbc.Card(
-            className='fitcards-card',
-            children=[
-                dbc.CardHeader(html.H6('Power Fit', style={'font-weight': 'bold', 'color':cpowfit, 'text-align':'center'})),
-                dbc.CardBody(
-                    [
-                        html.P('y = a \U000022C5 x\U00001D47 + c', className='fit-text', style={'color': cpowfit}),
-                        html.P(f'a = {ppopt[0]:.2e} ± {pperr[0]:.2e}', className='fit-text'),
-                        html.P(f'b = {ppopt[1]:.2f} ± {pperr[1]:.2f}', className='fit-text'),
-                        html.P(f'c = {ppopt[2]:.2f} ± {pperr[2]:.2f}', className='fit-text'),
-                        html.P(f'R\U000000B2 = {Rsq_pow:.2f}', className='fit-text')
-                    ]
-                )
-            ],
-            color="danger",
-            outline=True
-        ),
+        pperr = [np.inf, np.inf, np.inf] 
     else:
-        powfitcard = powfitcard_failed
+        try:
+            ppopt, ppcov = curve_fit(pow, x, y, p0=(1, 1, 0))
+            pperr = np.sqrt(np.diag(ppcov))
+            res = y - pow(x, *ppopt)
+            sqsum_res = np.sum(res**2)
+            sqsum_tot = np.sum((y-np.mean(y))**2)
+            Rsq_pow = 1 - sqsum_res/sqsum_tot
+
+        except RuntimeError:
+            powfitcard = powfitcard_failed
+
+            pperr = [np.inf, np.inf, np.inf] # again messy!
+
+
+        if pperr[0]+pperr[1] != np.inf:
+
+            powfitcard = dbc.Card(
+                className='fitcards-card',
+                children=[
+                    dbc.CardHeader(html.H6('Power Fit', style={'font-weight': 'bold', 'color':cpowfit, 'text-align':'center'})),
+                    dbc.CardBody(
+                        [
+                            html.P('y = a \U000022C5 x\U00001D47 + c', className='fit-text', style={'color': cpowfit}),
+                            html.P(f'a = {ppopt[0]:.2e} ± {pperr[0]:.2e}', className='fit-text'),
+                            html.P(f'b = {ppopt[1]:.2f} ± {pperr[1]:.2f}', className='fit-text'),
+                            html.P(f'c = {ppopt[2]:.2f} ± {pperr[2]:.2f}', className='fit-text'),
+                            html.P(f'R\U000000B2 = {Rsq_pow:.2f}', className='fit-text')
+                        ]
+                    )
+                ],
+                color="danger",
+                outline=True
+            ),
+        else:
+            powfitcard = powfitcard_failed
 
     if pow_fit == ['on']:
         pow_collapse=True
@@ -523,13 +583,15 @@ def update_scatter_plot(x_selected, y_selected, color, start, end, lin_fit, log_
 
     scatter.update_coloraxes(
         colorbar_title_side='right',
-        colorbar_title=c_name, 
+        colorbar_title=None, 
         colorbar_tickprefix=tp,
         colorbar_title_font_size=20,
+
     )
     
+ 
     scatter.update_layout(
-        title={'text': f"{y_name.split('(')[0]} vs. {x_name.split('(')[0]}", 'x': 0.5, 'y': 0.93},
+        #title={'text': f"{y_name.split('(')[0]} vs. {x_name.split('(')[0]}", 'x': 0.5, 'y': 0.93},
         legend={'x':0.02, 'y':0.98, 'xanchor':'left', 'yanchor':'top'},
         margin=dict(b=65, r=0),
     )
@@ -538,6 +600,17 @@ def update_scatter_plot(x_selected, y_selected, color, start, end, lin_fit, log_
 
     scatter.update_yaxes(title_text=y_name)
     scatter.update_xaxes(title_text=x_name)
+    # add color bar titel as vertical annotation 
+    scatter.add_annotation(
+    text=c_name,
+    x=1.04,   # on the right side of the plot
+    y=0.5,    # centered vertically
+    xref="paper",
+    yref="paper",
+    showarrow=False,
+    textangle=-90,  # vertical orientation
+    font=dict(size=15)
+)
 
     # scatter.show(config = {'displayModeBar': False})
 
