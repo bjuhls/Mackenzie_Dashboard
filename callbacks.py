@@ -26,7 +26,7 @@ import os
 
 # import data
 # import as excel file (csv version commented out)
-excel_folder = 'data/DUCCEM_sampling_list_all_#75_5.xlsx'
+excel_folder = 'data/DUCCEM_sampling_list_all_#78_7.xlsx'
 df = pd.read_excel(excel_folder, sheet_name='DUCCEM_liveResults', parse_dates=['Date'], na_values='n.a.')
 
 #df = pd.read_csv('data/DUCCEM_sampling_list_#75_4.csv', parse_dates=['Date'], na_values='n.a.', sep=",")
@@ -340,14 +340,21 @@ def update_scatter_plot(x_selected, y_selected, color, start, end, lin_fit, log_
 
     data[x_selected] = data[x_selected].apply(clean_to_float)
     data[y_selected] = data[y_selected].apply(clean_to_float)
+    data[color]      = data[color].apply(clean_to_float)
 
     x = data[x_selected]
     y = data[y_selected]
 
     # remove NaN 
-    nan_mask = ~pd.isna(x) & ~pd.isna(y)
+    nan_mask = (
+    ~pd.isna(data[x_selected]) &
+    ~pd.isna(data[y_selected]) &
+    ~pd.isna(data[color]) 
+    )
+
     x = x[nan_mask]
     y = y[nan_mask]
+    data[color] = data[color][nan_mask]
 
     #print(x, y)
 
@@ -355,11 +362,11 @@ def update_scatter_plot(x_selected, y_selected, color, start, end, lin_fit, log_
     if colorlog == ['on']:
         cstyle={}
         tp='1e'
-        c=np.log10(df[color][time_mask])
+        c=np.log10(data[color][time_mask])
     else:
         cstyle={'opacity':0.5}
         tp=None
-        c=df[color][time_mask]
+        c=data[color][time_mask]
 
     # draw plot
     scatter = px.scatter(data, x=data[x_selected], y=data[y_selected],

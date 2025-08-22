@@ -13,7 +13,7 @@ import os
 
 
 # import data
-excel_folder = 'data/DUCCEM_sampling_list_all_#75_5.xlsx'
+excel_folder = 'data/DUCCEM_sampling_list_all_#78_7.xlsx'
 #df = pd.read_csv('data/DUCCEM_sampling_list_#75_4.csv', parse_dates=['Date'], na_values='n.a.', sep=",")
 #print(df.columns)
 df = pd.read_excel(excel_folder, sheet_name='DUCCEM_liveResults', parse_dates=['Date'], na_values='n.a.')
