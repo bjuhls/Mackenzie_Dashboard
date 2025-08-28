@@ -36,12 +36,15 @@ ts_mask = info['For Timeseries']=='Yes'
 sc_mask = info['For Scatter']=='Yes'
 new_label_mask = info['Renamed (unit)'].isnull()==False
 
-ts_alphabetic = np.argsort([str.casefold(i) for i in info.Name[ts_mask]])
-sc_alphabetic = np.argsort([str.casefold(i) for i in info.Name[sc_mask]])
-dl_alphabetic = np.argsort([str.casefold(i) for i in info.Name.dropna()])
-
 labels = info.Name.copy()
 labels[new_label_mask] = info['Renamed (unit)'][new_label_mask]
+
+# ts_alphabetic = np.argsort([str.casefold(i) for i in info.Name[ts_mask]])  # old version, not accounting for the renamed parameters -> not alphabetic
+ts_alphabetic = np.argsort([str.casefold(i) for i in labels[ts_mask]])
+sc_alphabetic = np.argsort([str.casefold(i) for i in labels[sc_mask]])
+dl_alphabetic = np.argsort([str.casefold(i) for i in info.Name.dropna()])
+
+
 
 
 # check if files match
