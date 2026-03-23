@@ -1,0 +1,28 @@
+name: dashboard_env
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.8
+  - numpy
+  - pandas
+  - scipy
+  - matplotlib
+  - seaborn=0.11.1
+  - openpyxl=3.0.7
+  - xlrd=1.2.0
+  - xlsxwriter=1.4.3
+  - pillow=8.2.0
+  - pip
+  - pip:
+      - dash==2.14.1
+      - dash-bootstrap-components==1.0.3
+      - plotly
+      - Flask
+      - Flask-Compress
+      - gunicorn
+      - statsmodels==0.12.2
+      - patsy==0.5.1
+      - Brotli==1.0.9
+      - future==0.18.2
+      - zope.interface==5.4.0

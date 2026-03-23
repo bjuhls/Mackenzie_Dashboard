@@ -26,7 +26,7 @@ import os
 
 # import data
 # import as excel file (csv version commented out)
-excel_folder = 'data/DUCCEM_sampling_list_all_#78_7.xlsx'
+excel_folder = 'data/DUCCEM_sampling_list_95.xlsx'
 df = pd.read_excel(excel_folder, sheet_name='DUCCEM_liveResults', parse_dates=['Date'], na_values='n.a.')
 
 #df = pd.read_csv('data/DUCCEM_sampling_list_#75_4.csv', parse_dates=['Date'], na_values='n.a.', sep=",")
@@ -35,9 +35,11 @@ df['Year'] = df.Date.dt.year
 df['Month'] = df.Date.dt.month
 
 #dis = pd.read_csv('data/Mackenzie_ArcticRedRiver_Version_2025.csv', parse_dates=['date'], index_col='date', sep=";")
-dis = pd.read_excel(excel_folder, sheet_name='Discharge_Gauge', parse_dates=['date'], index_col='date')
+dis = pd.read_excel(excel_folder, sheet_name='Discharge_Gauge_Inuvik', parse_dates=['date'], index_col='date')
 
-df['Discharge'] = dis.loc[list(df.Date)].discharge.values
+#df['Discharge'] = dis.loc[list(df.Date)].discharge.values
+df['Discharge'] = dis.reindex(df.Date).discharge.values
+
 df['Discharge'] = pd.to_numeric(df['Discharge'], errors='coerce')
 
 #param_info = pd.read_csv('data/Parameter_Info_Mackenzie_2025_4.csv', index_col='Name', sep=",")
@@ -94,11 +96,11 @@ darklink = '#373a3c'
 # clean values 
 def clean_to_float(value):
     try:
-        # Wenn der Wert ein String ist und '<' enthält, dann NaN zurückgeben
+        # If the value is a string and contains '<', then return NaN
         if isinstance(value, str) and '<' in value:
             return np.nan
         
-        # Leere Strings oder None ebenfalls als NaN
+        # Empty strings and None will also return NaN 
         if value == '' or value is None:
             return np.nan
         
@@ -157,11 +159,11 @@ def update_time_series_plot(first_y, second_y, start, end, y1log, y2log):
     #print(dis_1)
     data[first_y] = data[first_y].apply(clean_to_float)
 
-    x = data.Date
-    y = data[first_y]
-    nan_mask = ~pd.isna(x) & ~pd.isna(y)
-    x = x[nan_mask]
-    y = y[nan_mask]
+    x1 = data.Date
+    y1 = data[first_y]
+    nan_mask1 = ~pd.isna(x1) & ~pd.isna(y1)
+    #x1 = x1[nan_mask1]
+    #y1 = y1[nan_mask1]
     #y = y.to_numpy()
     #x = x.to_numpy()
 
@@ -184,32 +186,35 @@ def update_time_series_plot(first_y, second_y, start, end, y1log, y2log):
  
     fig = make_subplots(specs=[[{"secondary_y": True}]])
     fig.add_trace(
-        go.Scatter(x=x, y=y,
+        go.Scatter(x=x1, y=y1,
         #go.Scatter(x=x1, y=y1,
             mode='lines+markers',
             name=y1_name.split('(')[1].split(')')[0],
             hovertemplate= '%{text}' + '<extra></extra>',
             #text= ['<b>{}</b> <br> {} {}'.format(y1_name.split(' (')[0], i, y1_unit) for i in data[first_y][nan_mask]]#y1_name.split('(')[1].split(')')[0]]*len(data[first_y])
-            text= ['<b>{}</b> <br> {} {}'.format(y1_name.split(' (')[0], i, y1_unit) for i in data[first_y][nan_mask]],
+            text= ['<b>{}</b> <br> {} {}'.format(y1_name.split(' (')[0], i, y1_unit) for i in data[first_y]],
             yaxis="y1"
         ),
         #secondary_y=False,
     )
 
     data[second_y] = data[second_y].apply(clean_to_float)
-    y=data[second_y]
-    y=y[nan_mask]
-    #nan_mask = ~pd.isna(x) & ~pd.isna(y)
-    #y = y[nan_mask]
-    y = y.to_numpy()
+    
+    x2=data.Date
+    y2=data[second_y]
+    
+    nan_mask2 = ~pd.isna(x2) & ~pd.isna(y2)
+    #x2 = x2[nan_mask2]
+    #y2 = y2[nan_mask2]
+    #y = y.to_numpy()
 
     fig.add_trace(
-        go.Scatter(x=x, y=y,
+        go.Scatter(x=x2, y=y2,
         #go.Scatter(x=x1, y=y1,
             mode='lines+markers',
             name=y2_name.split('(')[1].split(')')[0],
             hovertemplate= '%{text}' + '<extra></extra>',
-            text= ['<b>{}</b> <br> {} {}'.format(y2_name.split(' (')[0], i, y2_unit) for i in data[second_y][nan_mask]],
+            text= ['<b>{}</b> <br> {} {}'.format(y2_name.split(' (')[0], i, y2_unit) for i in data[second_y]],
             # hovertemplate='%{y} <extra></extra>' + '%{text}',
             # text= [y2_name.split('(')[1].split(')')[0]]*len(data[second_y])
             yaxis="y2"
@@ -466,7 +471,7 @@ def update_scatter_plot(x_selected, y_selected, color, start, end, lin_fit, log_
         logfitcard = logfitcard_failed
         lperr=[np.inf, np.inf] # this is messy!
 
-    if lperr[0]+lperr[1] != np.inf:
+    if np.all(np.isfinite(lperr)):
 
         logfitcard = dbc.Card(
             className='fit-card',

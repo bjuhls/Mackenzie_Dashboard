@@ -13,56 +13,46 @@ import os
 
 
 # import data
-excel_folder = 'data/DUCCEM_sampling_list_95.xlsx'
-#df = pd.read_csv('data/DUCCEM_sampling_list_#75_4.csv', parse_dates=['Date'], na_values='n.a.', sep=",")
-#print(df.columns)
-df = pd.read_excel(excel_folder, sheet_name='DUCCEM_liveResults', parse_dates=['Date'], na_values='n.a.')
+df = pd.read_csv('data/DUCCEM_sampling_list.csv', parse_dates=['Date'], na_values='n.a.', sep=";")
 df['Day of Year'] = df.Date.dt.dayofyear
 df['Year'] = df.Date.dt.year
 df['Month'] = df.Date.dt.month
 
+
 # import discharge data and add to df
-#dis = pd.read_csv('data/Mackenzie_ArcticRedRiver_Version_2025.csv', parse_dates=['date'], index_col='date', sep=";")
-dis = pd.read_excel(excel_folder, sheet_name='Discharge_Gauge_Inuvik', parse_dates=['date'], index_col='date')
-
-#df['Discharge'] = dis.loc[list(df.Date)].discharge.values
-df['Discharge'] = dis.reindex(df.Date).discharge.values
-
+dis = pd.read_csv('data/Mackenzie_ArcticRedRiver_Version_20230809.csv',
+    parse_dates=['date'], index_col='date', sep=";"
+)
 #print(list(df.Date))
-#print(dis.iloc['date'])
+df['Discharge'] = dis.loc[list(df.Date)].discharge.values
+
 
 # import parameter information
-info = param_info = pd.read_excel(excel_folder, sheet_name='Parameter_Info')
+info = pd.read_csv('data/Parameter_Info_Mackenzie.csv', sep=";")
+#print(df.columns.values)
+#print(info.Name.values)
 
 ts_mask = info['For Timeseries']=='Yes'
 sc_mask = info['For Scatter']=='Yes'
 new_label_mask = info['Renamed (unit)'].isnull()==False
 
+ts_alphabetic = np.argsort([str.casefold(i) for i in info.Name[ts_mask]])
+sc_alphabetic = np.argsort([str.casefold(i) for i in info.Name[sc_mask]])
+dl_alphabetic = np.argsort([str.casefold(i) for i in info.Name])
+
 labels = info.Name.copy()
 labels[new_label_mask] = info['Renamed (unit)'][new_label_mask]
 
-# ts_alphabetic = np.argsort([str.casefold(i) for i in info.Name[ts_mask]])  # old version, not accounting for the renamed parameters -> not alphabetic
-ts_alphabetic = np.argsort([str.casefold(i) for i in labels[ts_mask]]) # now sorting the renamed parameters
-sc_alphabetic = np.argsort([str.casefold(i) for i in labels[sc_mask]])
-dl_alphabetic = np.argsort([str.casefold(i) for i in info.Name.dropna()])
-
-
-
-
 # check if files match
 if sum(df.columns.values != info.Name.values) > 0:
-    for a, b in zip(df.columns, info.Name):
-        if a != b:
-            print(f"Unterschied: df='{a}' vs info='{b}'")
-elif list(df.columns) != list(info.Name):  # Different order?
-    print("order does not match!")
-
-# raise ValueError('The columns of the data file and the Names in the info file do not match!')
+    raise ValueError('The columns of the data file and the Names in the info file do not match!')
 
 # set values below QF to np.nan
 #ii = range(45,79,2) # ion indices, modify when ions are added
 #for i, col in zip(ii, df.columns[ii]):
 #    df.loc[df.iloc[:, i] < df.iloc[:, i+1], col] = np.nan
+
+
 
 # define columns to use
 not_used = set()
@@ -101,7 +91,7 @@ navbar = dbc.NavbarSimple(
         #dbc.NavItem(dbc.NavLink("Download", href="/#download", external_link=True)),
         #dbc.NavItem(dbc.NavLink("The Station", href="/#the-station", external_link=True)),
         dbc.NavItem(dbc.NavLink("Related Info", href="/#related-info", external_link=True)),
-        dbc.NavItem(dbc.NavLink("Team", href="/team", external_link=True)), #target='_blank' ->add if you want to open a new tab
+        dbc.NavItem(dbc.NavLink("Team", href="/team", external_link=True, target='_blank', disabled=False)),
         dbc.DropdownMenu(
             children=[
                 dbc.DropdownMenuItem("Email", header=True),
@@ -127,7 +117,7 @@ header = dbc.Container([
     dbc.Row([
         dbc.Col(
             html.A(
-                html.Img(src='assets/Logo_DUCCEM_neu.png', width='85%', title='Home'),
+                html.Img(src='assets/Logo_MackenzieRiverSampling.png', width='100%', title='Home'),
                 href='/',
                 className='header-image'
             ),
@@ -135,23 +125,37 @@ header = dbc.Container([
             xl=3, lg=3, md=3, sm=2, xs=2
         ),
         dbc.Col(
-    [
-        html.H1(
             [
-                "Mackenzie River Water Biogeochemistry at Inuvik, NWT",
-                html.Br(),
-                html.Span(
-                    "(Data from the East Channel from 2023 until now)",
-                    style={'fontWeight': 'normal'}
+                html.H1(
+                    [
+                        "Explore the biogeochemistry of the Mackenzie River (East Channel, Inuvik)",
+                        html.Br(),
+                    ],
+                     className='header-title',
+                     style={'font-size': '18px'}
                 ),
+                html.P(
+                    #children=[
+                    ['The research leading to these results has received funding from the European ',
+                      'Union’s Horizon 2020 project Interact under grant agreement No 730938, click for more info about ', 
+                      html.A( ' INTERACT', href='https://eu-interact.org/',
+                      style={"color": "black"}
+                      )
+                    ],
+                        
+                        #' The research leading to these results has received funding from the European',
+                        #' Union’s Horizon 2020 project Interact under grant agreement No 730938.',
+                        #href='https://www.awi.de/en/about-us/organisation/staff/sofia-antonova.html'
+                        
+                    #],
+                    className='header-description',
+                ),
+
             ],
-            className='header-title',
-            style={'font-size': '20px'}
+            align='center',
+            # width=8
+            xl=8, lg=8, md=12, sm=12, xs=12,
         ),
-    ],
-    align='center',
-    xl=8, lg=8, md=12, sm=12, xs=12,
-)
     ],
     justify='center'
     ),
@@ -174,44 +178,37 @@ footer = dbc.Container(
                     href='https://www.awi.de/en/',
                     target="_blank"
                     ),
-                #width=1
+                width=1
             ),
             dbc.Col(
-                html.P([
-                    html.A('Imprint', href="/imprint",
-                        style={"color": "#28b4e6", 'font-size': '17px'}
-                        )
-                        ])
-                    # width=2
+                html.A(
+                    html.Img(src='assets/ARI_logo.png',
+                        className='footer-image',
+                        # style={'height': '50px'},
+                        title='Western Arctic Research Centre (WARC)'),
+                    href='https://nwtresearch.com/about/regional-research-centres/western-arctic-research-centre',
+                    target="_blank"
                     ),
+                width=0.5
+            ),
             dbc.Col(
-                html.P([
-                    html.A('Accessibility', href="/accessibility",
-                        style={"color": "#28b4e6", 'font-size': '17px'}
-                        )
-                        ])
-                    # width=2
+                html.A(
+                    html.Img(src='assets/Interact_logo.png',
+                        className='footer-image',
+                        # style={'height': '50px'},
+                        title='Funded by EU Interact project'),
+                    href='https://eu-interact.org/',
+                    target="_blank"
                     ),
-            dbc.Col(
-                html.P([
-                    html.A('Privacy Notice', href= 'https://www.awi.de/en/privacy-protection.html' , target='_blank',
-                            style={"color": "#28b4e6", 'font-size': '17px'}
-                            )
-                            ]),
-                        # width=2
-                    ),
-            
-                ],
-        justify='center',
+                width=1
+            ),
+        ],
+        justify='around',
         align='center',
-                ),
-
+        ),
     ],
     className='footer'
 )
-
-
-
 
 
 # layout of the main page
@@ -282,7 +279,7 @@ main_page = dbc.Container([
                         ],
                         multi=False,
                         style={'width': '100%'},
-                        value='Electrical Conductivity Lab (µS cm⁻¹)',
+                        value='EC (µS/cm)',
                         className='dropdown',
                     ),
                     html.P('Select Time Window', className='menu-title'),
@@ -407,7 +404,9 @@ main_page = dbc.Container([
                         ],
                         multi=False,
                         style={'width': '100%'},
-                        value='δ18O (‰)',
+                        value='Temperature (°C)',
+                        # value = 'Temperature (°C)',
+                        # value = 'Conductivity lab (µS/cm)',
                         className='dropdown',
 
                         ),
@@ -433,7 +432,10 @@ main_page = dbc.Container([
                         ],
                         multi=False,
                         style={'width': '100%'},
-                        value='Electrical Conductivity Lab (µS cm⁻¹)',
+                        value='EC (µS/cm)',
+                        # value = 'Temperature (°C)',
+                        # value = 'logy_artificial',
+                        # value = 'Conductivity in situ (µS/cm)',
                         className='dropdown',
                     ),
                     dbc.Row([
@@ -657,33 +659,7 @@ main_page = dbc.Container([
                         ],
                     xl=6, lg=6, md=10, sm=12, xs=12
                     ), # end of col
-                    
-                    dbc.Col(
-                        [
-                            # ARI
-                            dcc.Link(
-                            dbc.Card(
-                                className='internal-card',
-                                children=[
-                                dbc.CardImg(src="assets/ARI_logo.png", top=True, className='preview-image'),
-                                dbc.CardBody([
-                                    html.P(
-                                        "Visit the webpage of our Partner for the water sampling in Inuvik",
-                                        className="text",
-                                        )
-                                ]),
-                            ],
-                            ),
-                            href='https://nwtresearch.com/about/regional-research-centres/western-arctic-research-centre',
-                            target="_blank",
-                            style={'color':darklink}
-                            ),
-                            html.Div(style={'margin-top': '20px'}),
-                            #
-                        ],
-                    xl=6, lg=6, md=10, sm=12, xs=12
-                    ), # end of col
-                    
+
                 ],
                 justify='around'
                 ) # end of row
@@ -696,9 +672,7 @@ main_page = dbc.Container([
     footer
 
 
-
 ])
-
 
 
 # layout of the team page
@@ -811,7 +785,7 @@ team_page = dbc.Container([
                              dbc.CardImg(src='assets/Felica_clip.png'),
                              dbc.CardBody([
                                  html.H5('Felica Gehde'), # pay attention to name legth
-                                 html.H6('Student Assistant'),
+                                 html.H6('Student assistant'),
                                  html.P('Alfred Wegener Institute, Helmholtz Centre for Polar and Marine Research (AWI)'),
                                  #html.A('Personal institute page', href='https://www.awi.de/en/about-us/organisation/staff/sofia-antonova.html', target='_blank')
                              ],
@@ -836,25 +810,10 @@ team_page = dbc.Container([
                          ]),
                          xl=3, lg=3, md=4, sm=6, xs=12
                      ),
-                     ],
-                    justify='center',
-                ),
+                ],
+                justify='center'),
+                
                 dbc.Row([
-                     dbc.Col(
-                         dbc.Card([
-                             dbc.CardImg(src='assets/Foto SRokitta and Nicolas the Seal.jpg'),
-                             dbc.CardBody([
-                                 html.H5('Sebastian Rokitta'), # pay attention to name legth
-                                 html.H6('Senior scientist'),
-                                 html.P('Alfred Wegener Institute, Helmholtz Centre for Polar and Marine Research (AWI)'),
-                                html.A('Personal institute page', href='https://www.awi.de/ueber-uns/organisation/mitarbeiter/detailseite/sebastian-rokitta.html', target='_blank')
-                             ],
-                             className='team-card'
-                             )
-
-                         ]),
-                         xl=3, lg=3, md=4, sm=6, xs=12
-                     ),
                      dbc.Col(
                          dbc.Card([
                              dbc.CardImg(src='assets/Julie.png'),
@@ -870,37 +829,6 @@ team_page = dbc.Container([
                          ]),
                          xl=3, lg=3, md=4, sm=6, xs=12
                      ),
-                     dbc.Col(
-                         dbc.Card([
-                             dbc.CardImg(src='assets/Frederieke.jpg'),
-                             dbc.CardBody([
-                                 html.H5('Frederieke Miesner'), # pay attention to name legth
-                                 html.H6('Data Scientist'), 
-                                 html.P('Alfred Wegener Institute, Helmholtz Centre for Polar and Marine Research (AWI)'),
-                                 html.A('Personal institute page', href='https://www.awi.de/ueber-uns/organisation/mitarbeiter/detailseite/frederieke-miesner.html', target='_blank')
-                             ],
-                             className='team-card'
-                             )
-
-                         ]),
-                         xl=3, lg=3, md=4, sm=6, xs=12
-                     ),
-                     dbc.Col(
-                         dbc.Card([
-                             dbc.CardImg(src='assets/Marie.jpeg'),
-                             dbc.CardBody([
-                                 html.H5('Marie Jacobi'), # pay attention to name legth
-                                 html.H6('Student Assistant'),
-                                 html.P('Alfred Wegener Institute, Helmholtz Centre for Polar and Marine Research (AWI)'),
-                                 #html.A('Personal institute page', href='https://www.awi.de/en/about-us/organisation/staff/sofia-antonova.html', target='_blank')
-                             ],
-                             className='team-card'
-                             )
-                        
-                        ]),
-                         xl=3, lg=3, md=4, sm=6, xs=12
-                     ),
-
                 ],
                 justify='center'),
                 
@@ -911,86 +839,3 @@ team_page = dbc.Container([
     footer
 
 ])
-
-
-
-# layout of the imprint page
-
-
-imprint_page = dbc.Container([
-    navbar,
-    header[0],
-
-    dbc.Card(children=[
-        dbc.CardHeader(html.H4('Imprint')),
-        dbc.CardBody(children=[
-                        html.B(['Address'],
-                        style={'font-size': '18px',"width": "100%","opacity": "unset"}
-                                ),
-                        html.P(['Alfred-Wegener-Institut', html.Br(),'Helmholtz Centre for Polar and Marine Research', html.Br(),' Am Handelshafen 12', html.Br(),'27570 Bremerhaven', html.Br(), 'Germany', html.Br(), html.Br(),'Tel.: +49 (0)471 4831-0', html.Br(),'Fax: +49 (0)471 4831-1149', html.Br(),'E-Mail: info@awi.de', html.Br(), html.A('www.awi.de', href= 'https://www.awi.de/en/' ,target='_blank',style={"color": "black"})
-                        ]),
-                        html.B(['Legal form'], style={'font-size': '18px',"width": "100%","opacity": "unset"}),
-                        html.P(['The Alfred Wegener Institute is a foundation under public law. (Stiftung des öffentlichen Rechts) The AWI is a member of the Helmholtz Association of German Research Centres.']),
-                        
-                        html.B(['Representatives'], style={'font-size': '18px',"width": "100%","opacity": "unset"}),
-                        html.P(['The Alfred Wegener Institute is legally represented by its Directorate:', html.Br(),'Prof. Dr. Antje Boetius (Director)', html.Br(),'Dr. Karsten Wurr (Administrative Director)', html.Br(), html.B('VAT'), ' identification number according to § 27a Umsatzsteuergesetz: DE 114707273']),
-                        
-                        html.B(['Editorial responsibility'], style={'font-size': '18px',"width": "100%","opacity": "unset"}),
-                        html.P(['Bennet Juhls (bennet.juhls@awi.de)']),
-                        
-                        html.B(['Copyright'], style={'font-size': '18px',"width": "100%","opacity": "unset"}),
-                        html.P(['The content of all web pages of this website is protected by copyright. All illustrations and images on the websites of the Alfred Wegener Institute may not be copied, reproduced or distributed without the permission of the AWI. A change of the meta data (IPTC data incl. naming of originator, source, copyright notice and terms of use) of the images is not permitted.']),
-                        
-                        html.B(['Rights of use'], style={'font-size': '18px',"width": "100%","opacity": "unset"}),
-                        html.P(['The Alfred Wegener Institute authorises the following ',html.B('private use'),' of images on this website:', html.Br(), '- copying the images to your private computer', html.Br(), '- the printing of images for private archiving or decoration purposes', html.Br(), '- the forwarding of the images to friends and family, together with reference to their origin, mention of the copyright notice and reference to the purely private use requirement.',html.Br(),html.Br(),'The Alfred Wegener Institute authorises the following free use of images in the press section of this website for editorial journalistic publications under the following conditions:',html.Br(),'- The images used illustrate contributions about the work of the Alfred Wegener Institute.',html.Br(),'- The complete copyright notice is named as deposited in the metadata (IPTC data), i.e. in the form "Alfred-Wegener-Institute/Surname, first name"',html.Br(),'- the short form "AWI/Surname " may only be used if the full name of the institute is mentioned together with the abbreviation in the article.',html.Br(),html.Br(),'Images under a Creative Commons license may be used according to the license used.',html.Br(),html.Br(),'In general, the Alfred Wegener Institute',html.B(' does not '),'grant permission to use images on this website for the following purposes:',html.Br(),'- Advertising, design of advertisements, commercials etc.',html.Br(),'- Sale of products in which the focus is on images (T-shirts, coffee cups, large prints)',html.Br(),'- Sale of digital copies of image data.']),
-                        
-                        html.B(['Liability notice'], style={'font-size': '18px',"width": "100%","opacity": "unset"}),
-                        html.P(['No liability is assumed for completeness, editorial and technical errors, topicality, omissions, etc. or the accuracy of the content, unless the author can be proven to have acted with intent or gross negligence.'])         
-                    ])
-                ]),
-  
-    footer
-
-])
-
-
-
-# layout of the Accessibility page
-
-
-accessibility_page = dbc.Container([
-    navbar,
-    header[0],
-
-    dbc.Card(children=[
-        dbc.CardHeader(html.H4('Accessibility')),
-        dbc.CardBody(children=[
-        
-        
-                        html.B(['Compliance status'], style={'font-size': '18px',"width": "100%","opacity": "unset"}),
-                        html.P(['This website is partially compliantiv with BITV 2.0, due to the non-compliances and/or the exemptions listed below.']),
-
-                        html.B(['Non-accessible content'], style={'font-size': '18px',"width": "100%","opacity": "unset"}),
-                        html.P(['The content listed below is non-accessible for the following reason(s):', html.Br(), 'non-compliance with the BITV 2.0']),
-
-                        html.H6(['1. Color contrast'], style={'font-size': '16px',"width": "100%","opacity": "unset"}),
-                        html.P(['Description: Contrast between text color and background color is insufficient for some elements.', html.Br(), 'Measure: Introduction of a button to see a high-contrast color variant.']),
-
-                        html.H6(['2. Missing alternative texts'], style={'font-size': '16px',"width": "100%","opacity": "unset"}),
-                        html.P(['Description: Many visual elements lack a corresponding alternative text.']),
-                                        
-                        html.B(['Feedback and contact information:'],
-                        style={'font-size': '18px',"width": "100%","opacity": "unset"}
-                                ),
-                        html.P(['We would like to further improve our offer. Feel free to share your digital accessibility issues and questions with us: barrierefreiheit@awi.de'
-                        ]),
-
-                        
-                    ])
-                ]),
-  
-    footer
-
-])
-
-
