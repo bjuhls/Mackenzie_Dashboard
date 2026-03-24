@@ -13,48 +13,56 @@ import os
 
 
 # import data
-df = pd.read_csv('data/DUCCEM_sampling_list.csv', parse_dates=['Date'], na_values='n.a.', sep=";")
+excel_folder = 'data/DUCCEM_sampling_list_95.xlsx'
+#df = pd.read_csv('data/DUCCEM_sampling_list_#75_4.csv', parse_dates=['Date'], na_values='n.a.', sep=",")
+#print(df.columns)
+df = pd.read_excel(excel_folder, sheet_name='DUCCEM_liveResults', parse_dates=['Date'], na_values='n.a.')
 df['Day of Year'] = df.Date.dt.dayofyear
 df['Year'] = df.Date.dt.year
 df['Month'] = df.Date.dt.month
 
-
 # import discharge data and add to df
-dis = pd.read_csv('data/Mackenzie_ArcticRedRiver_Version_20230809.csv',
-    parse_dates=['date'], index_col='date', sep=";"
-)
+#dis = pd.read_csv('data/Mackenzie_ArcticRedRiver_Version_2025.csv', parse_dates=['date'], index_col='date', sep=";")
+dis = pd.read_excel(excel_folder, sheet_name='Discharge_Gauge_Inuvik', parse_dates=['date'], index_col='date')
 
-df['Discharge'] = dis.loc[list(df.Date)].discharge.values
+#df['Discharge'] = dis.loc[list(df.Date)].discharge.values
+df['Discharge'] = dis.reindex(df.Date).discharge.values
+
 #print(list(df.Date))
 #print(dis.iloc['date'])
 
-
 # import parameter information
-info = pd.read_csv('data/Parameter_Info_Mackenzie.csv', sep=";")
-#print(df.columns.values)
-#print(info.Name.values)
+info = param_info = pd.read_excel(excel_folder, sheet_name='Parameter_Info')
 
 ts_mask = info['For Timeseries']=='Yes'
 sc_mask = info['For Scatter']=='Yes'
 new_label_mask = info['Renamed (unit)'].isnull()==False
 
-ts_alphabetic = np.argsort([str.casefold(i) for i in info.Name[ts_mask]])
-sc_alphabetic = np.argsort([str.casefold(i) for i in info.Name[sc_mask]])
-dl_alphabetic = np.argsort([str.casefold(i) for i in info.Name])
-
 labels = info.Name.copy()
 labels[new_label_mask] = info['Renamed (unit)'][new_label_mask]
 
+# ts_alphabetic = np.argsort([str.casefold(i) for i in info.Name[ts_mask]])  # old version, not accounting for the renamed parameters -> not alphabetic
+ts_alphabetic = np.argsort([str.casefold(i) for i in labels[ts_mask]]) # now sorting the renamed parameters
+sc_alphabetic = np.argsort([str.casefold(i) for i in labels[sc_mask]])
+dl_alphabetic = np.argsort([str.casefold(i) for i in info.Name.dropna()])
+
+
+
+
 # check if files match
 if sum(df.columns.values != info.Name.values) > 0:
-    raise ValueError('The columns of the data file and the Names in the info file do not match!')
+    for a, b in zip(df.columns, info.Name):
+        if a != b:
+            print(f"Unterschied: df='{a}' vs info='{b}'")
+elif list(df.columns) != list(info.Name):  # Different order?
+    print("order does not match!")
+
+# raise ValueError('The columns of the data file and the Names in the info file do not match!')
 
 # set values below QF to np.nan
 #ii = range(45,79,2) # ion indices, modify when ions are added
 #for i, col in zip(ii, df.columns[ii]):
 #    df.loc[df.iloc[:, i] < df.iloc[:, i+1], col] = np.nan
-
-
 
 # define columns to use
 not_used = set()
@@ -119,7 +127,7 @@ header = dbc.Container([
     dbc.Row([
         dbc.Col(
             html.A(
-                html.Img(src='assets/Logo_MackenzieRiverSampling.png', width='100%', title='Home'),
+                html.Img(src='assets/Logo_DUCCEM_neu.png', width='85%', title='Home'),
                 href='/',
                 className='header-image'
             ),
@@ -127,37 +135,23 @@ header = dbc.Container([
             xl=3, lg=3, md=3, sm=2, xs=2
         ),
         dbc.Col(
+    [
+        html.H1(
             [
-                html.H1(
-                    [
-                        "Explore the biogeochemistry of the Mackenzie River (East Channel, Inuvik)",
-                        html.Br(),
-                    ],
-                     className='header-title',
-                     style={'font-size': '18px'}
+                "Mackenzie River Water Biogeochemistry at Inuvik, NWT",
+                html.Br(),
+                html.Span(
+                    "(Data from the East Channel from 2023 until now)",
+                    style={'fontWeight': 'normal'}
                 ),
-                html.P(
-                    #children=[
-                    ['The research leading to these results has received funding from the European ',
-                      'Union’s Horizon 2020 project Interact under grant agreement No 730938, click for more info about ', 
-                      html.A( ' INTERACT', href='https://eu-interact.org/', target='_blank', 
-                      style={"color": "black"}
-                      )
-                    ],
-                        
-                        #' The research leading to these results has received funding from the European',
-                        #' Union’s Horizon 2020 project Interact under grant agreement No 730938.',
-                        #href='https://www.awi.de/en/about-us/organisation/staff/sofia-antonova.html'
-                        
-                    #],
-                    className='header-description',
-                ),
-
             ],
-            align='center',
-            # width=8
-            xl=8, lg=8, md=12, sm=12, xs=12,
+            className='header-title',
+            style={'font-size': '20px'}
         ),
+    ],
+    align='center',
+    xl=8, lg=8, md=12, sm=12, xs=12,
+)
     ],
     justify='center'
     ),
@@ -180,7 +174,7 @@ footer = dbc.Container(
                     href='https://www.awi.de/en/',
                     target="_blank"
                     ),
-                # width=1
+                #width=1
             ),
             dbc.Col(
                 html.P([
@@ -288,7 +282,7 @@ main_page = dbc.Container([
                         ],
                         multi=False,
                         style={'width': '100%'},
-                        value='EC (µS/cm)',
+                        value='Electrical Conductivity Lab (µS cm⁻¹)',
                         className='dropdown',
                     ),
                     html.P('Select Time Window', className='menu-title'),
@@ -413,9 +407,7 @@ main_page = dbc.Container([
                         ],
                         multi=False,
                         style={'width': '100%'},
-                        value='Temperature (°C)',
-                        # value = 'Temperature (°C)',
-                        # value = 'Conductivity lab (µS/cm)',
+                        value='δ18O (‰)',
                         className='dropdown',
 
                         ),
@@ -441,10 +433,7 @@ main_page = dbc.Container([
                         ],
                         multi=False,
                         style={'width': '100%'},
-                        value='EC (µS/cm)',
-                        # value = 'Temperature (°C)',
-                        # value = 'logy_artificial',
-                        # value = 'Conductivity in situ (µS/cm)',
+                        value='Electrical Conductivity Lab (µS cm⁻¹)',
                         className='dropdown',
                     ),
                     dbc.Row([
@@ -695,34 +684,6 @@ main_page = dbc.Container([
                     xl=6, lg=6, md=10, sm=12, xs=12
                     ), # end of col
                     
-                    dbc.Col(
-                        [
-                            # Interact
-                            dcc.Link(
-                            dbc.Card(
-                                className='internal-card',
-                                children=[
-                                dbc.CardImg(src="assets/Interact_logo.png", top=True, className='preview-image'),
-                                dbc.CardBody([
-                                    html.P(
-                                        "This project received fundings by INTERACT",
-                                        className="text",
-                                        )
-                                ]),
-                            ],
-                            ),
-                            href='https://eu-interact.org/',
-                            target="_blank",
-                            style={'color':darklink}
-                            ),
-                            html.Div(style={'margin-top': '20px'}),
-                            #
-                        ],
-                    xl=6, lg=6, md=10, sm=12, xs=12
-                    ), # end of col
-                    
-                                
-
                 ],
                 justify='around'
                 ) # end of row
@@ -850,7 +811,7 @@ team_page = dbc.Container([
                              dbc.CardImg(src='assets/Felica_clip.png'),
                              dbc.CardBody([
                                  html.H5('Felica Gehde'), # pay attention to name legth
-                                 html.H6('Student assistant'),
+                                 html.H6('Student Assistant'),
                                  html.P('Alfred Wegener Institute, Helmholtz Centre for Polar and Marine Research (AWI)'),
                                  #html.A('Personal institute page', href='https://www.awi.de/en/about-us/organisation/staff/sofia-antonova.html', target='_blank')
                              ],
@@ -909,6 +870,37 @@ team_page = dbc.Container([
                          ]),
                          xl=3, lg=3, md=4, sm=6, xs=12
                      ),
+                     dbc.Col(
+                         dbc.Card([
+                             dbc.CardImg(src='assets/Frederieke.jpg'),
+                             dbc.CardBody([
+                                 html.H5('Frederieke Miesner'), # pay attention to name legth
+                                 html.H6('Data Scientist'), 
+                                 html.P('Alfred Wegener Institute, Helmholtz Centre for Polar and Marine Research (AWI)'),
+                                 html.A('Personal institute page', href='https://www.awi.de/ueber-uns/organisation/mitarbeiter/detailseite/frederieke-miesner.html', target='_blank')
+                             ],
+                             className='team-card'
+                             )
+
+                         ]),
+                         xl=3, lg=3, md=4, sm=6, xs=12
+                     ),
+                     dbc.Col(
+                         dbc.Card([
+                             dbc.CardImg(src='assets/Marie.jpeg'),
+                             dbc.CardBody([
+                                 html.H5('Marie Jacobi'), # pay attention to name legth
+                                 html.H6('Student Assistant'),
+                                 html.P('Alfred Wegener Institute, Helmholtz Centre for Polar and Marine Research (AWI)'),
+                                 #html.A('Personal institute page', href='https://www.awi.de/en/about-us/organisation/staff/sofia-antonova.html', target='_blank')
+                             ],
+                             className='team-card'
+                             )
+                        
+                        ]),
+                         xl=3, lg=3, md=4, sm=6, xs=12
+                     ),
+
                 ],
                 justify='center'),
                 
